@@ -1,0 +1,147 @@
+@CHARSET "ISO-8859-1";
+*{
+	font-family: Calibri;
+	
+}
+#Welcome
+{
+	background-color: green  ;
+}
+#Register
+{
+	font: italic normal 100% 'Times New Roman', Times, serif;
+	background-color: green;
+}
+#header{
+	background: #90a090;
+	border-bottom: double 3px #aba;
+	border-left: solid 1px #9a9;
+	border-right: solid 1px #565;
+	border-top: solid 1px #9a9;
+	font: italic normal 100% 'Times New Roman', Times, serif;
+	letter-spacing: 0.2em;
+	margin: 0;
+	padding: 15px 10px 15px 60px;
+}
+
+body {
+    background-color: white;
+}
+h1 {
+    color: black;
+    background-color: green;
+    text-align:center;
+    padding: 0;
+}
+h5 {
+    color: black;
+    background-color: green;
+    text-align:center;
+}
+p {
+    color: black;
+    text: large;
+}
+div {
+    color: black;
+    background-color: green;
+    text-align:center;
+}
+li{
+	background-color: green  ;
+	text-align: left;
+}
+li:hover{
+	background-color: darkgreen;
+	transform: scale(1.1);
+}
+#m
+{
+	color:  black;
+	float: left;
+	background-color: green;
+	font: italic normal 100% 'Times New Roman', Times, serif;
+}
+#m ul
+{
+	list-style-type: none;
+}
+#image
+{
+	float: right;
+}
+#R{
+	float: right;
+}
+#R ul{
+	list-style-type: none;
+	
+}
+div.links{
+	background-color: white;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modalcontent {
+    background-color: #90a090;//grey;//#fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 100%; /* Could be more or less, depending on screen size */
+    font-size:17px;
+	font: italic normal 100% 'Times New Roman', Times, serif;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.myButton {
+	background-color:#90a090;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:28px;
+	border:1px solid #ffaa22;
+	display:inline-block;
+	cursor:pointer;
+	color:#333333;
+	font-size:17px;
+	font: italic normal 100% 'Times New Roman', Times, serif;
+	padding:16px 31px;
+	text-shadow:0px 1px 0px #ffee66;
+}
+.myButton:hover {
+	background-color:#ffab23;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+#registerlink, #loginlink
+{
+	color:#333333;
+	font-size:17px;
+	font: italic normal 100% 'Times New Roman', Times, serif;	
+	float: right;
+}
