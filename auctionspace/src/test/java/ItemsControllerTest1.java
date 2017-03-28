@@ -1,9 +1,9 @@
-package com.auctionspace.controller;
-
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
+
+import com.auctionspace.controller.ItemsController;
 
 public class ItemsControllerTest1 {
 
@@ -32,11 +32,4 @@ public class ItemsControllerTest1 {
 		assertNotNull("ItemsController is not empty.", test.getItemsList());
 		test.getItemsList();
 	}
-
-	@Test
-	public void testSayHello() {
-		ItemsController test = new ItemsController();
-		assertSame("helloWorld", test.sayHello()) ;
-	}
-
 }

@@ -1,15 +1,11 @@
-package com.auctionspace.controller;
-
 import static org.junit.Assert.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.auctionspace.controller.ManageUsersController;
 import com.auctionspace.model.LoginModel;
 import com.auctionspace.model.UserModel;
 

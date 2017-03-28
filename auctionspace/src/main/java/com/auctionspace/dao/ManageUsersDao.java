@@ -31,7 +31,6 @@ public class ManageUsersDao implements IManageUsersDao{
 	@Autowired 
 	JdbcTemplate jdbctemp;
 	
-	Connection conUtility = ConnectionUtility.getConnection();
 	public static ManageUsersDao instance = new ManageUsersDao();
 	private static Logger logger = Logger.getLogger(ManageUsersDao.class);
 
