@@ -16,45 +16,57 @@
 <spring:url value="/resources/static/css/displayItems.css"
 	var="displayItemsCss" />
 <link href="${displayItemsCss}" rel="stylesheet">
+<spring:url value="/resources/Home.css" var="HomeCss"/> 
+<link href= "${HomeCss}" rel="stylesheet" >
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 <script>
 	var app = angular.module('myApp', []);
 	function MyController($scope, $http) {
-		$scope.items = ${items};
-		$scope.itemName = ${itemName};
+		$scope.getItemsList = function(itemsJson) {
+			$scope.itemsList = angular.fromJson(itemsJson);
+			console.log($scope.itemsList);
+		};
 	};
 </script>
 </head>
 
 <body data-ng-app="myApp">
+<div id="header">
+<h1>Auction Space</h1>
+<span>An Auction site for students of UNC Charlotte.</span>
+</div>
 	<h1>Items for Auction</h1>
-	<p>Item ${items} ${itemName} added successfully !</p>
+	<p>Item ${itemName} added successfully !</p>
 	<div class="table-responsive-vertical shadow-z-1"
 		data-ng-controller="MyController">
-		<table id="table" class="table table-hover table-mc-light-blue"
-			data-ng-table="myTable">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Quantity</th>
-					<th>Description</th>
-					<th>Start Time</th>
-					<th>End Time</th>
-					<th>Location</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr data-ng-repeat="itemDetails in ${items}">
-					<td>{{itemDetails.itemDisplayName}}</td>
-					<td>{{itemDetails.quantity}}</td>
-					<td>{{itemDetails.description}}</td>
-					<td>{{itemDetails.startTime}}</td>
-					<td>{{itemDetails.endTime}}</td>
-					<td>{{itemDetails.location}}</td>
-				</tr>
-			</tbody>
-		</table>
+		<div data-ng-init="getItemsList('${items}')">
+			<table id="table" class="table table-hover table-mc-light-blue">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Quantity</th>
+						<th>Description</th>
+						<th>Start Time</th>
+						<th>End Time</th>
+						<th>Location</th>
+					</tr>
+				</thead>
+				<tbody>
+				 <c:forEach var="i" items="${items}">
+					<tr>
+						<td>${i}</td>
+						<td>${i.quantity}</td>
+						<td>${i.description}</td>
+						<td>${i.startTime}</td>
+						<td>${itemDetails.endTime}</td>
+						<td>${itemDetails.location}</td>
+					</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
 	</div>
+	<a href="/auctionspace/index.jsp">Home</a>
 </body>
 </html>

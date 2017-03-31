@@ -83,7 +83,7 @@
 						<div class="input-group">
 							<form:input path="startTime" name="startTime" id="startTime"
 								placeholder="Start time for auction of this item"
-								class="form-control" />
+								class="form-control" type="datetime-local"/>
 						</div>
 					</div>
 				</div>

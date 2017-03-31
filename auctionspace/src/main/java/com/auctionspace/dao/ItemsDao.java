@@ -32,7 +32,7 @@ public class ItemsDao {
 
 	public boolean addItem(ItemsModel items) {
 		try {
-			logger.info("in clone info insert");
+			logger.info("In add item method");
 			String sql = "insert into items values (?, ?, ?, ?, ?, ?, ?) ";
 			logger.info("query=" + sql);
 			this.jdbcTemplate.update(sql, new Object[] {items.getItemDisplayName(), items.getPrice(), items.getQuantity(), items.getStartTime(), items.getEndTime(), items.getLocation(), items.getDescription()}) ;

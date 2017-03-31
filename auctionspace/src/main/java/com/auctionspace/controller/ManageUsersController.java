@@ -74,7 +74,7 @@ public class ManageUsersController {
 	    ModelAndView mav = null;
 	    UserModel user = userService.validateUser(login);
 	    if (null != user) {
-	    mav = new ModelAndView("Users/Welcome");
+	    mav = new ModelAndView("Welcome");
 	    mav.addObject("firstname", user.getFname());
 	    } else {
 	    mav = new ModelAndView("login");

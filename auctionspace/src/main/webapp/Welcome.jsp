@@ -13,5 +13,13 @@
 </head>
 <body id = "Welcome">
 	<h1 id = "header">Welcome ${firstname}</h1>
+	<p></p>
+	<button id = "auctionItem" type="button" >Auction an Item</button>
+<script>	
+var AuctionButton = document.getElementById("auctionItem");
+AuctionButton.addEventListener('click',function(event){
+	location.href='/auctionspace/Items/addItem';
+})
+</script>	
 </body>
 </html>
