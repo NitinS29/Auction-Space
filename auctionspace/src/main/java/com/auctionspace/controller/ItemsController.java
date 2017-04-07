@@ -2,7 +2,7 @@ package com.auctionspace.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,8 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.auctionspace.dao.ItemsDao;
 import com.auctionspace.model.ItemsModel;
 import com.auctionspace.utils.ItemUtils;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,7 +45,6 @@ public class ItemsController {
 	public ModelAndView addItem(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("item") ItemsModel item) {
 		ItemUtils itemUtil = new ItemUtils();
-		logger.debug("In processAddItem" + item.getDescription() + item.getItemDisplayName() + item.getEndTime() + item.getStartTime() + item.getLocation());
 		itemUtil.addItems(item);
 		ModelAndView mav = new ModelAndView("DisplayItems");
 		mav.addObject("items", itemUtil.getListOfItems().toString());
@@ -55,30 +52,11 @@ public class ItemsController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/addItem", method = RequestMethod.GET)
-	public ModelAndView showRegister(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/addItem/{user}", method = RequestMethod.GET)
+	public ModelAndView showRegister(@PathVariable("user")String user, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("AddItems");
 		mav.addObject("item", new ItemsModel());
+		mav.addObject("seller", user);
 		return mav;
-	}
-
-	@RequestMapping(value = "/addItemREST", method = RequestMethod.POST)
-	@ResponseBody
-	public String addItem(HttpServletRequest request, @RequestBody String payload) {
-		boolean result = false;
-		Gson gson = new GsonBuilder().create();
-		logger.info("Payload" + payload);
-		try {
-			ItemsModel items = (ItemsModel)gson.fromJson(payload, ItemsModel.class);
-			ItemUtils itemUtil = new ItemUtils();
-			result = itemUtil.addItems(items);
-		} catch (Exception e) {
-			logger.debug("Exception: " + e.getMessage());
-		}
-		if (result) {
-			return "Item added successfully";
-		} else {
-			return "Error in adding item, try again";
-		}
 	}
 }

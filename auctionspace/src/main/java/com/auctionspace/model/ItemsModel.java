@@ -1,7 +1,5 @@
 package com.auctionspace.model;
 
-import java.util.Date;
-
 public class ItemsModel {
 	//private long itemId;
 	private String itemDisplayName;
@@ -10,7 +8,7 @@ public class ItemsModel {
 	//private int noOfBids; 
 	private String startTime;
 	private String endTime;
-	//private String seller;
+	private String seller;
 	private String location;
 	//private float currentPrice;
 	private String description;
@@ -57,12 +55,12 @@ public class ItemsModel {
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-	/*public String getSeller() {
+	public String getSeller() {
 		return seller;
 	}
 	public void setSeller(String seller) {
 		this.seller = seller;
-	}*/
+	}
 	public String getLocation() {
 		return location;
 	}

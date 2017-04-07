@@ -1,6 +1,5 @@
 package com.auctionspace.utils;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +28,7 @@ public class ItemUtils {
 				//int noOfBids = (int) itemsList.get(i).get("no_of_bids"); 
 				String startTime = itemsList.get(i).get("start_time").toString();
 				String endTime = itemsList.get(i).get("end_time").toString();
-				//String seller = itemsList.get(i).get("seller").toString();
+				String seller = itemsList.get(i).get("seller").toString();
 				String location = itemsList.get(i).get("location").toString();
 				//float currentPrice = (float) itemsList.get(i).get("current_price");
 				String description = itemsList.get(i).get("description").toString();
@@ -41,7 +40,7 @@ public class ItemUtils {
 				//item.put("noOfBids", noOfBids);
 				item.put("startTime", startTime);
 				item.put("endTime", endTime);
-				//item.put("seller", seller);
+				item.put("seller", seller);
 				item.put("location", location);
 				//item.put("currentPrice", currentPrice);
 				item.put("description", description);

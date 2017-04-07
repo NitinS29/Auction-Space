@@ -20,52 +20,59 @@
 <link href= "${HomeCss}" rel="stylesheet" >
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+	<script type="text/javascript">
+ var itemDetail= ${items};
+</script>
 <script>
-	var app = angular.module('myApp', []);
-	function MyController($scope, $http) {
-		$scope.getItemsList = function(itemsJson) {
-			$scope.itemsList = angular.fromJson(itemsJson);
-			console.log($scope.itemsList);
-		};
-	};
+ var app = angular.module('displayItemsApp', []);
+
+    function displayItemsAppCtrl($scope, $http) {
+      $scope.onloadFun = function() {
+		$http({
+				method : 'GET',
+				url : 'http://localhost:8080/auctionspace/Items/getItemsList'
+			}).success(function(data, status, headers, config) {
+				$scope.itemsList = data;
+			}).error(function(data, status, headers, config) {
+				// called asynchronously if an error occurs
+				// or server returns response with an error status.
+			});
+      }
+    };
 </script>
 </head>
-
-<body data-ng-app="myApp">
-<div id="header">
-<h1>Auction Space</h1>
-<span>An Auction site for students of UNC Charlotte.</span>
-</div>
-	<h1>Items for Auction</h1>
-	<p>Item ${itemName} added successfully !</p>
-	<div class="table-responsive-vertical shadow-z-1"
-		data-ng-controller="MyController">
-		<div data-ng-init="getItemsList('${items}')">
-			<table id="table" class="table table-hover table-mc-light-blue">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Quantity</th>
-						<th>Description</th>
-						<th>Start Time</th>
-						<th>End Time</th>
-						<th>Location</th>
-					</tr>
-				</thead>
-				<tbody>
-				 <c:forEach var="i" items="${items}">
-					<tr>
-						<td>${i}</td>
-						<td>${i.quantity}</td>
-						<td>${i.description}</td>
-						<td>${i.startTime}</td>
-						<td>${itemDetails.endTime}</td>
-						<td>${itemDetails.location}</td>
-					</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+<body ng-app="displayItemsApp" ng-controller="displayItemsAppCtrl">
+	<div class="table-responsive-vertical shadow-z-1" data-ng-init="onloadFun()">
+		<div id="header">
+			<h1>Auction Space</h1>
+			<span>An Auction site for students of UNC Charlotte</span>
 		</div>
+		<h2>Items for Auction</h2>
+		<p>Item ${itemName} added successfully !</p>
+		
+		<table id="table" data-ng-table="myTable"  class="table table-hover table-mc-light-blue">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Quantity</th>
+					<th>Description</th>
+					<th>Start Time</th>
+					<th>End Time</th>
+					<th>Location</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="itemDetails in itemsList">
+					<td>{{itemDetails.itemDisplayName}}</td>
+					<td>{{itemDetails.quantity}}</td>
+					<td>{{itemDetails.description}}</td>
+					<td>{{itemDetails.startTime}}</td>
+					<td>{{itemDetails.endTime}}</td>
+					<td>{{itemDetails.location}}</td>
+					<td><button type="button">Register</button> </td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 	<a href="/auctionspace/index.jsp">Home</a>
 </body>
