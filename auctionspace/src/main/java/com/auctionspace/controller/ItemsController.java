@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.auctionspace.dao.ItemsDao;
 import com.auctionspace.model.ItemsModel;
-import com.auctionspace.utils.ItemUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,32 +21,30 @@ import org.apache.log4j.Logger;
 @RequestMapping("/Items")
 public class ItemsController {
 	private static Logger logger = Logger.getLogger(ItemsController.class);
+
 	@Autowired
-	public ItemsDao userService;
+	public ItemsDao itemService;
 
 	@RequestMapping(value = "/getItemsList", method = RequestMethod.GET)
 	public @ResponseBody String getItemsList() {
 		logger.debug("In getItemsList");
-		ItemUtils itemUtil = new ItemUtils();
-		return itemUtil.getListOfItems().toString();
+		return itemService.getAllItems().toString();
 	}
 
 	@RequestMapping(value = "/displayItems", method = RequestMethod.GET)
 	public ModelAndView displayItems(HttpServletRequest request, HttpServletResponse response) {
 		logger.debug("In displayItems");
 		ModelAndView mav = new ModelAndView("DisplayItems");
-		ItemUtils itemUtil = new ItemUtils();
-		mav.addObject("items", itemUtil.getListOfItems().toString());
+		mav.addObject("items", itemService.getAllItems().toString());
 		return mav;
 	}
 
 	@RequestMapping(value = "/processAddItem", method = RequestMethod.POST)
 	public ModelAndView addItem(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("item") ItemsModel item) {
-		ItemUtils itemUtil = new ItemUtils();
-		itemUtil.addItems(item);
+		itemService.addItem(item);
 		ModelAndView mav = new ModelAndView("DisplayItems");
-		mav.addObject("items", itemUtil.getListOfItems().toString());
+		mav.addObject("items", itemService.getAllItems().toString());
 		mav.addObject("itemName", item.getItemDisplayName());
 		return mav;
 	}

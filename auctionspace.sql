@@ -1,5 +1,14 @@
-CREATE TABLE items (item_display_name VARCHAR(500), price FLOAT, quantity INT, start_time DATE, end_time DATE, location VARCHAR(100), description VARCHAR(1000));
-
+CREATE TABLE Items 
+	(item_id INT NOT NULL AUTO_INCREMENT, 
+	item_display_name VARCHAR(500) NOT NULL, 
+	price FLOAT, quantity INT, 
+	start_time DATE, 
+	end_time DATE, 
+	seller VARCHAR(500) NOT NULL, 
+	location VARCHAR(100), 
+	description VARCHAR(1000), 
+	PRIMARY KEY(item_id));
+	
 CREATE TABLE User (
 fname varchar(25),
 mname varchar(25),

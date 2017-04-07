@@ -1,7 +1,7 @@
 package com.auctionspace.model;
 
 public class ItemsModel {
-	//private long itemId;
+	private int itemId;
 	private String itemDisplayName;
 	private float price;
 	private int quantity;
@@ -13,12 +13,13 @@ public class ItemsModel {
 	//private float currentPrice;
 	private String description;
 
-/*	public long getItemId() {
+	public int getItemId() {
 		return itemId;
 	}
-	public void setItemId(long itemId) {
+	public void setItemId(int itemId) {
 		this.itemId = itemId;
-	}*/
+	}
+	
 	public String getItemDisplayName() {
 		return itemDisplayName;
 	}

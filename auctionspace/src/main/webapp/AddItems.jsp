@@ -23,7 +23,7 @@
 
 <body id="AddItem">
 	<div class="container">
-		<form:form commandName="item" action="processAddItem"
+		<form:form commandName="item" action="/auctionspace/Items/processAddItem"
 			class="well form-horizontal"  method="post">
 			<fieldset>
 
