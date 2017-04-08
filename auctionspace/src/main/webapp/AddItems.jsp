@@ -53,6 +53,15 @@
 					</div>
 				</div>
 
+				<div class="form-group">
+					<form:label path="image" class="col-md-4 control-label">Image</form:label>
+					<div class="col-md-4 inputGroupContainer">
+						<div class="input-group">
+							<form:input type="file" name="image" size="10" required="required" class="form-control"
+								path="image" id="image" placeholder="Item Image" />
+						</div>
+					</div>
+				</div>
 				<!-- Text input-->
 
 				<div class="form-group">

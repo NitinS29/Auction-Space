@@ -5,12 +5,14 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.auctionspace.dao.ItemsDao.ItemMapper;
 import com.auctionspace.model.LoginModel;
 import com.auctionspace.model.UserModel;
 
 //import org.json.JSONArray;
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 //import javax.swing.tree.RowMapper;
@@ -63,7 +65,6 @@ public class ManageUsersDao implements IManageUsersDao{
 
 	@Override
 	public void registerUser(UserModel user) {
-		// TODO Auto-generated method stub
 		String insertUserQuery = "insert into User values(?,?,?,?,?,?,?,?,?)";
 		jdbctemp.update(insertUserQuery, new Object[] { user.getFname(), user.getMname(),user.getLname()
 				, user.getEmail(),user.getUsername(),user.getPassword(), user.getPhone(), user.getAddress(), user.getUserType()});
@@ -71,11 +72,25 @@ public class ManageUsersDao implements IManageUsersDao{
 
 	@Override
 	public UserModel validateUser(LoginModel login) {
-		// TODO Auto-generated method stub
 		String selectUserQuery = "select * from User where username='" + login.getUsername() + "' and password='" + login.getPassword()
 		+ "'";
 		List<UserModel> users = jdbctemp.query(selectUserQuery, new UserMapper());
 		return users.size() > 0 ? users.get(0) : null;
+	}
+
+	@Override
+	public String getUserEmailId(String fname) {
+		Map<String, Object> user = null;
+		try {
+			String query = "select emailId from User where fname='" + fname + "'";
+			logger.debug("query " + query);
+			user = jdbctemp.queryForMap(query);
+			return user.get("emailId").toString();
+		} 
+		catch(Exception e) {
+			logger.error("Error in getUserEmailId: " + e.getMessage());
+		}
+		return null;
 	}
 }
 

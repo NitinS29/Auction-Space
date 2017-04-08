@@ -5,13 +5,20 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
 import com.auctionspace.model.ItemsModel;
+import com.auctionspace.model.UserModel;
 
 @Service
 public class ItemsDao {
@@ -23,6 +30,21 @@ public class ItemsDao {
 
 	private static Logger logger = Logger.getLogger(ItemsDao.class);
 
+	class ItemMapper implements RowMapper<ItemsModel> {
+		public ItemsModel mapRow(ResultSet rs, int arg1) throws SQLException {
+			ItemsModel item = new ItemsModel();
+			item.setItemId((int)rs.getInt("item_id"));
+			item.setItemDisplayName(rs.getString("item_display_name"));
+			item.setPrice(rs.getFloat("price"));
+			item.setQuantity(rs.getInt("quantity"));
+			item.setStartTime(rs.getString("start_time"));
+			item.setEndTime(rs.getString("end_time"));
+			item.setDescription(rs.getString("description"));
+			item.setSeller(rs.getString("seller"));
+			item.setLocation(rs.getString("location"));
+			return item;
+		}
+	}
 	public JSONArray getAllItems() {
 		JSONArray items = new JSONArray();
 		try {
@@ -61,5 +83,17 @@ public class ItemsDao {
 			logger.error("Error in addItem: " + e.getMessage());
 		}
 		return true;
+	}
+
+	public ItemsModel getItemDetails(String itemId) {
+		ItemsModel item = null;
+		try {
+			String query = "select * from Items where item_id='" + itemId + "'";
+			logger.error("in getItemDetails: " + query);
+			item = this.jdbcTemplate.queryForObject(query,  new ItemMapper());
+		} catch (Exception e) {
+			logger.error("Error in getItemDetails: " + e.getMessage());
+		}
+		return item;
 	}
 }

@@ -1,10 +1,13 @@
 package com.auctionspace.model;
 
+import javax.servlet.http.Part;
+
 public class ItemsModel {
 	private int itemId;
 	private String itemDisplayName;
 	private float price;
 	private int quantity;
+	private Part image;
 	//private int noOfBids; 
 	private String startTime;
 	private String endTime;
@@ -16,6 +19,7 @@ public class ItemsModel {
 	public int getItemId() {
 		return itemId;
 	}
+	
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
@@ -23,18 +27,22 @@ public class ItemsModel {
 	public String getItemDisplayName() {
 		return itemDisplayName;
 	}
+	
 	public void setItemDisplayName(String itemDisplayName) {
 		this.itemDisplayName = itemDisplayName;
 	}
+	
 	public float getPrice() {
 		return price;
 	}
+	
 	public void setPrice(float price) {
 		this.price = price;
 	}
 	public int getQuantity() {
 		return quantity;
 	}
+	
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
@@ -44,27 +52,35 @@ public class ItemsModel {
 	public void setNoOfBids(int noOfBids) {
 		this.noOfBids = noOfBids;
 	}*/
+	
 	public String getStartTime() {
 		return startTime;
 	}
+	
 	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
+	
 	public String getEndTime() {
 		return endTime;
 	}
+	
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
+	
 	public String getSeller() {
 		return seller;
 	}
+	
 	public void setSeller(String seller) {
 		this.seller = seller;
 	}
+	
 	public String getLocation() {
 		return location;
 	}
+	
 	public void setLocation(String location) {
 		this.location = location;
 	}
@@ -77,7 +93,16 @@ public class ItemsModel {
 	public String getDescription() {
 		return description;
 	}
+	
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public Part getImage() {
+		return image;
+	}
+	
+	public void setImage(Part image) {
+		this.image = image;
 	}
 }
