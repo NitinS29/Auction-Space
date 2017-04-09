@@ -3,29 +3,16 @@ package com.auctionspace.utils;
 import java.util.Properties;    
 import javax.mail.*;    
 import javax.mail.internet.*;
-import javax.servlet.http.HttpSession;
-import javax.activation.*;
 
 //import com.auctionspace.model.ItemsModel;    
 
 public class EmailUtils {
 
 	public void send(String to, String itemName, float bidAmount){  
-		
-		String from = "email.auctionspace@gmail.com";
-		
-
-
-import com.auctionspace.model.ItemsModel;    
-
-public class EmailUtils {
-
-	public void send(String to, ItemsModel item){  
-		
 		String from = "email.auctionspace@gmail.com";
 
 		String password = "Qrrv159+";
-		
+
 		//Get properties object    
 		Properties props = new Properties();    
 		props.put("mail.smtp.host", "smtp.gmail.com");    
@@ -34,7 +21,7 @@ public class EmailUtils {
 				"javax.net.ssl.SSLSocketFactory");    
 		props.put("mail.smtp.auth", "true");    
 		props.put("mail.smtp.port", "465");    
-		
+
 		//get Session   
 
 		Session session = Session.getDefaultInstance(props,    
@@ -57,5 +44,5 @@ public class EmailUtils {
 		} catch (MessagingException e) {throw new RuntimeException(e);}    
 
 	} 
-	
+
 }
