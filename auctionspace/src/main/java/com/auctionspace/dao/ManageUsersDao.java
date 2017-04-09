@@ -82,6 +82,7 @@ public class ManageUsersDao implements IManageUsersDao{
 	public String getUserEmailId(String fname) {
 		Map<String, Object> user = null;
 		try {
+
 			String query = "select emailId from User where username=?";
 			logger.debug("query " + query);
 			user = jdbctemp.queryForMap(query, new Object[]{fname});

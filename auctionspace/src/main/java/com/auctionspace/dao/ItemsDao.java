@@ -96,6 +96,7 @@ public class ItemsDao {
 		}
 		return item;
 	}
+
 	
 	public float getItemPrice(int item_id){
 		float item_price = 0;
@@ -127,4 +128,5 @@ public class ItemsDao {
 		}
 		return seller;
 	}
+
 }

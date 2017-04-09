@@ -61,7 +61,11 @@
 								path="image" id="image" placeholder="Item Image" />
 						</div>
 					</div>
+
 				</div>
+
+				</div>-->
+
 				<!-- Text input-->
 
 				<div class="form-group">

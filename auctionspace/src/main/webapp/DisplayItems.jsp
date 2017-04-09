@@ -66,9 +66,11 @@
 			<span>An Auction site for students of UNC Charlotte</span>
 		</div>
 		<h1>Items for Auction</h1>
+
 	<div align = "right">
 	<button id = "logout" type="button" >Log Out</button>
 	</div>
+
 		<p>Item ${itemName} added successfully !</p>
 		<table id="table" data-ng-table="myTable"
 			class="table table-hover table-mc-light-blue">
@@ -108,11 +110,13 @@
 		</table>
 	</div>
 	<a href="/auctionspace/index.jsp">Home</a>
+
 <script>
 var LogOutButton = document.getElementById("logout");
 LogOutButton.addEventListener('click',function(event){
 location.href='/auctionspace/SignOut';
 })
 </script>
+
 </body>
 </html>

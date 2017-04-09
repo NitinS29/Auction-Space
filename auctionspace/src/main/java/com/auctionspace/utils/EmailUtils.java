@@ -14,6 +14,16 @@ public class EmailUtils {
 		
 		String from = "email.auctionspace@gmail.com";
 		
+
+
+import com.auctionspace.model.ItemsModel;    
+
+public class EmailUtils {
+
+	public void send(String to, ItemsModel item){  
+		
+		String from = "email.auctionspace@gmail.com";
+
 		String password = "Qrrv159+";
 		
 		//Get properties object    
@@ -26,7 +36,7 @@ public class EmailUtils {
 		props.put("mail.smtp.port", "465");    
 		
 		//get Session   
-		
+
 		Session session = Session.getDefaultInstance(props,    
 				new javax.mail.Authenticator() {    
 			protected PasswordAuthentication getPasswordAuthentication() {    
@@ -37,8 +47,10 @@ public class EmailUtils {
 		try {    
 			MimeMessage message = new MimeMessage(session);    
 			message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));    
+
 			message.setSubject("Bid on " + itemName);    
 			message.setText("A new bid of $"+bidAmount+" has been placed on your item " +itemName);    
+
 			//send message  
 			Transport.send(message);    
 			System.out.println("message sent successfully");    

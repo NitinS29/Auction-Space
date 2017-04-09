@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import com.auctionspace.dao.BidDao;
+
 import com.auctionspace.dao.ItemsDao;
 import com.auctionspace.dao.ManageUsersDao;
 import com.auctionspace.model.ItemsModel;
@@ -32,9 +34,11 @@ public class ItemsController {
 	@Autowired
 	public ManageUsersDao userService;
 	
+
 	@Autowired
 	public BidDao bidDao;
 	
+
 	@RequestMapping(value = "/getItemsList", method = RequestMethod.GET)
 	public @ResponseBody String getItemsList() {
 		logger.debug("In getItemsList");
@@ -77,6 +81,7 @@ public class ItemsController {
 		mav.addObject("itemId", itemId);
 		mav.addObject("prevBid",bidDao.getLastBid(itemInfo.getItemId()));
 		mav.addObject("noOfBids",bidDao.getNoOfBids(itemInfo.getItemId()));
+
 		return mav;
 	}
 }

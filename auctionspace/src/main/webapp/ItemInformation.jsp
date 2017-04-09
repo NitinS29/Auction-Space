@@ -27,9 +27,11 @@
 			<h1>Auction Space</h1>
 			<span>An Auction site for students of UNC Charlotte</span>
 		</div>
+
 			<div align = "right">
 				<button id = "logout" type="button" >Log Out</button>
 			</div>
+
 <div class="product clear">
 			<header>
 				<hgroup>
@@ -43,8 +45,10 @@
 			<section>
 				<p>${item.itemDisplayName}</p>
 				<details>
+
 				<p id="header">${message}</p>
 				<br>
+
 					<summary>Product Features</summary>
 					<ul>
 						<li>Seller ${item.seller}</li>
@@ -53,8 +57,11 @@
 						<li>Start Time ${item.startTime}</li>
 						<li>End Time ${item.endTime}</li>
 						<li>Location ${item.location}</li>
+
 						<li>No of Bids ${noOfBids}</li>
 						<li>Current Bid ${prevBid}</li>
+
+
 					</ul>
 				</details>
 				<button>Register</button>
@@ -64,6 +71,11 @@
 		</div>
 	<a href="/auctionspace/index.jsp">Home</a>
 	
+
+				<button>Bid</button>
+			</section>
+		</div>
+	<a href="/auctionspace/index.jsp">Home</a>
 <script>
 var DisplayButton = document.getElementById("bid");
 DisplayButton.addEventListener('click',function(event){
@@ -75,5 +87,6 @@ LogOutButton.addEventListener('click',function(event){
 location.href='/auctionspace/SignOut';
 })
 </script>
+
 </body>
 </html>

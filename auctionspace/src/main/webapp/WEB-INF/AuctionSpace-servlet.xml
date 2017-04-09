@@ -17,6 +17,7 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+
 	<bean id="user" class="com.auctionspace.model.UserModel" />
 	<bean id="itemService" class="com.auctionspace.dao.ItemsDao" />
 	<bean id="item" class="com.auctionspace.model.ItemsModel" />
