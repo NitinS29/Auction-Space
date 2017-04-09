@@ -16,9 +16,11 @@
 		<property name="prefix" value="/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	<bean id="userService" class="com.auctionspace.dao.ManageUsersDao" />
+
 	<bean id="user" class="com.auctionspace.model.UserModel" />
- 
+	<bean id="itemService" class="com.auctionspace.dao.ItemsDao" />
+	<bean id="item" class="com.auctionspace.model.ItemsModel" />
+ 	
     <bean id="jdbctemp" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource" />
     </bean>
@@ -37,6 +39,19 @@
  
         <property name="basename" value="/WEB-INF/messages" />
        </bean>
+      
+      <mvc:interceptors>
+     	<mvc:interceptor>
+     		<mvc:mapping path="/**" />
+     		<mvc:exclude-mapping path="/Users/login" />
+     		<mvc:exclude-mapping path="/Users/loginProcess" />
+     		<mvc:exclude-mapping path="/Users/registerSeller" />
+     		<mvc:exclude-mapping path="/Users/registerBuyer" />
+     		 <mvc:exclude-mapping path="/Users/registerProcessSeller" />
+     		<mvc:exclude-mapping path="/Users/registerProcessBuyer" />
+        	<bean class="com.auctionspace.utils.SessionUtil" />
+        </mvc:interceptor>
+	</mvc:interceptors>  
        
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:annotation-driven />

@@ -61,5 +61,7 @@
 	<classpathentry kind="lib" path="C:/Users/Nitin/Desktop/AuctionSpace/Setup Files/spring-framework-4.3.6.RELEASE-dist/spring-framework-4.3.6.RELEASE/libs/spring-webmvc-4.3.6.RELEASE.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Nitin/Desktop/AuctionSpace/Setup Files/spring-framework-4.3.6.RELEASE-dist/spring-framework-4.3.6.RELEASE/libs/spring-webmvc-portlet-4.3.6.RELEASE.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Nitin/Desktop/AuctionSpace/Setup Files/spring-framework-4.3.6.RELEASE-dist/spring-framework-4.3.6.RELEASE/libs/spring-websocket-4.3.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Nitin/Desktop/AuctionSpace/Setup Files/spring-framework-4.3.6.RELEASE-dist/spring-framework-4.3.6.RELEASE/libs/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Nitin/Desktop/AuctionSpace/Setup Files/spring-framework-4.3.6.RELEASE-dist/spring-framework-4.3.6.RELEASE/libs/slf4j-api-1.7.21.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

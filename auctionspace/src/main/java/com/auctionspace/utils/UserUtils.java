@@ -12,7 +12,7 @@ import com.auctionspace.model.UserModel;
 
 public class UserUtils {
 	
-	private static Logger logger = Logger.getLogger(ItemUtils.class);
+	//private static Logger logger = Logger.getLogger(ItemUtils.class);
 	ManageUsersDao userDao = ManageUsersDao.getInstance();
 
 	/*public JSONArray getListOfUsers() {
@@ -43,7 +43,7 @@ public class UserUtils {
 	public String addItems(UserModel user) {
 	//	for (int i = 0; i < items.length; i++)
 	//	{
-			logger.debug("Details" + user.getFname());
+			//logger.debug("Details" + user.getFname());
 //		}
 		return null;
 	}
