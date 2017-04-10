@@ -30,51 +30,50 @@ import com.auctionspace.dao.ManageUsersDao;
 public class BidController {
 	private static Logger logger = Logger.getLogger(BidController.class);
 	@Autowired
-	public BidDao userService;
+	public BidDao bidService;
 	@Autowired
-	public ItemsDao itemsDao;
+	public ItemsDao itemService;
 	@Autowired
-	ManageUsersDao userDao;
-	
-	  @RequestMapping(value = "/bidProcess/{itemId}")
-	  public ModelAndView setBid(@PathVariable String itemId, HttpServletRequest request, HttpServletResponse response,
-	  @ModelAttribute("bid") BidModel bid) {
-	    boolean result = false;
+	ManageUsersDao userService;
+
+	@RequestMapping(value = "/bidProcess/{itemId}")
+	public ModelAndView setBid(@PathVariable String itemId, HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute("bid") BidModel bid) {
+		boolean result = false;
 		ModelAndView mav = null;
-	    //ItemsDao itemDao = new ItemsDao();	    
-	    BidUtils bidUtils = new BidUtils();   
-	    //ManageUsersDao user = new ManageUsersDao();
-	    if (bidUtils.validateBid(bid.getbid_amount(), itemsDao.getItemPrice(bid.getitem_id()))) {
-	    result = userService.addBid(bid);}
-	    if(result){
-	    
-	    mav = new ModelAndView("ItemInformation");
-		ItemsModel itemInfo = itemsDao.getItemDetails(itemId);
-		mav.addObject("item", itemInfo);
-	    mav.addObject("message","Bid was successful !!!");
-		mav.addObject("prevBid",userService.getLastBid(bid.getitem_id()));
-		mav.addObject("noOfBids",userService.getNoOfBids(bid.getitem_id()));
-		bidUtils.notifyBidder(userDao.getUserEmailId(itemsDao.getSeller(bid.getitem_id())),itemInfo.getItemDisplayName(),bid.getbid_amount());
-	    } else {
-	    mav = new ModelAndView("ItemInformation");
-		ItemsModel itemInfo = itemsDao.getItemDetails(itemId);
-		mav.addObject("item", itemInfo);
-		mav.addObject("prevBid",userService.getLastBid(bid.getitem_id()));
-		mav.addObject("noOfBids",userService.getNoOfBids(bid.getitem_id()));
-	    mav.addObject("message", "Bid is invalid!!");
-	    }
-	    return mav;
-	  }
-	
-	  @RequestMapping(value = "/bidding/{itemId}")
-	  public ModelAndView getBid(@PathVariable String itemId, HttpServletRequest request, HttpServletResponse response,
-	  @ModelAttribute("bid") BidModel bid) {
-			ModelAndView mav = new ModelAndView("Bid");
-			mav.addObject("user", request.getSession().getAttribute("userId"));
-			mav.addObject("itemId", itemId);
-			//mav.addObject("item",itemModel);
-			//mav.addObject("Bid", new BidModel());
-			return mav;
-	  
-	  }
+		//ItemsDao itemDao = new ItemsDao();	    
+		BidUtils bidUtils = new BidUtils();   
+		//ManageUsersDao user = new ManageUsersDao();
+		if (bidUtils.validateBid(bid.getbid_amount(), itemService.getItemPrice(bid.getitem_id()))) {
+			result = bidService.addBid(bid);}
+		if(result){
+			mav = new ModelAndView("ItemInformation");
+			ItemsModel itemInfo = itemService.getItemDetails(itemId);
+			mav.addObject("item", itemInfo);
+			mav.addObject("message","Bid was successful !!!");
+			mav.addObject("prevBid",bidService.getLastBid(bid.getitem_id()));
+			mav.addObject("noOfBids",bidService.getNoOfBids(bid.getitem_id()));
+			bidUtils.notifyBidder(userService.getUserEmailId(itemService.getSeller(bid.getitem_id())),itemInfo.getItemDisplayName(),bid.getbid_amount());
+		} else {
+			mav = new ModelAndView("ItemInformation");
+			ItemsModel itemInfo = itemService.getItemDetails(itemId);
+			mav.addObject("item", itemInfo);
+			mav.addObject("prevBid",bidService.getLastBid(bid.getitem_id()));
+			mav.addObject("noOfBids",bidService.getNoOfBids(bid.getitem_id()));
+			mav.addObject("message", "Bid is invalid!!");
+		}
+		return mav;
+	}
+
+	@RequestMapping(value = "/bidding/{itemId}")
+	public ModelAndView getBid(@PathVariable String itemId, HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute("bid") BidModel bid) {
+		ModelAndView mav = new ModelAndView("Bid");
+		mav.addObject("user", request.getSession().getAttribute("userId"));
+		mav.addObject("itemId", itemId);
+		//mav.addObject("item",itemModel);
+		//mav.addObject("Bid", new BidModel());
+		return mav;
+
+	}
 }

@@ -7,7 +7,6 @@ public class BidOwner implements IObserver{
 
 	@Override
 	public void update(String bidOwnerEmail, String itemName, float bidAmount) {
-		// TODO Auto-generated method stub
 		//call email functionality here.
 		EmailUtils email = new EmailUtils();
 		email.send(bidOwnerEmail,itemName,bidAmount);

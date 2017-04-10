@@ -67,9 +67,9 @@
 		</div>
 		<h1>Items for Auction</h1>
 
-	<div align = "right">
-	<button id = "logout" type="button" >Log Out</button>
-	</div>
+		<div align="right">
+			<button id="logout" type="button">Log Out</button>
+		</div>
 
 		<p>Item ${itemName} added successfully !</p>
 		<table id="table" data-ng-table="myTable"
@@ -89,8 +89,7 @@
 			<tbody>
 				<tr data-ng-repeat="itemDetails in itemsList">
 					<td>{{itemDetails.itemId}}</td>
-					<td><a
-						ng-href="/auctionspace/Items/getItemInformation/{{itemDetails.itemId}}">{{itemDetails.itemDisplayName}}</td>
+					<td><a ng-href="/auctionspace/Items/getItemInformation?itemId={{itemDetails.itemId}}&fname=${fname}">{{itemDetails.itemDisplayName}}</td>
 					<td>{{itemDetails.quantity}}</td>
 					<td>{{itemDetails.description}}</td>
 					<td>{{itemDetails.seller}}</td>
@@ -101,8 +100,7 @@
 							action="/auctionspace/Auction/registerUserforItemAuction"
 							class="well form-horizontal" method="post">
 							<input type="hidden" name="itemId" value="{{itemDetails.itemId}}" />
-							<input type="hidden" name="fname"
-								value="${fname}" />
+							<input type="hidden" name="fname" value="${fname}" />
 							<input type="submit" value="Register" name="Register">
 						</form:form></td>
 				</tr>
@@ -111,12 +109,12 @@
 	</div>
 	<a href="/auctionspace/index.jsp">Home</a>
 
-<script>
-var LogOutButton = document.getElementById("logout");
-LogOutButton.addEventListener('click',function(event){
-location.href='/auctionspace/SignOut';
-})
-</script>
+	<script>
+		var LogOutButton = document.getElementById("logout");
+		LogOutButton.addEventListener('click', function(event) {
+			location.href = '/auctionspace/SignOut';
+		})
+	</script>
 
 </body>
 </html>

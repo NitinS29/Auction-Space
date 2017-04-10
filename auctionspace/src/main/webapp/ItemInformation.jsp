@@ -16,77 +16,75 @@
 	var="NormalizeCss" />
 <link href="${NormalizeCss}" rel="stylesheet">
 <spring:url value="/resources/static/styles/styles.css" var="StylesCss" />
-<spring:url value="/resources/static/images/honda_cbr.png"
-	var="ImageCss" />
+<spring:url value="/resources/static/images/" var="ImagePath" />
 <link href="${StylesCss}" rel="stylesheet">
 <script src="/js/jquery.js"></script>
 <script src="/js/modernizr.js"></script>
 </head>
 <body>
-			<div id="header">
-			<h1>Auction Space</h1>
-			<span>An Auction site for students of UNC Charlotte</span>
-		</div>
+	<div id="header">
+		<h1>Auction Space</h1>
+		<span>An Auction site for students of UNC Charlotte</span>
+	</div>
 
-			<div align = "right">
-				<button id = "logout" type="button" >Log Out</button>
-			</div>
+	<div align="right">
+		<button id="logout" type="button">Log Out</button>
+	</div>
 
-<div class="product clear">
-			<header>
-				<hgroup>
-					<h1>${item.itemDisplayName}</h1>
-					<h4>${item.seller}</h4>
-				</hgroup>
-			</header>
-			<figure>
-				<img src="${ImageCss}">
-			</figure>
-			<section>
-				<p>${item.itemDisplayName}</p>
-				<details>
+	<div class="product clear">
+		<header>
+			<hgroup>
+				<h1>${item.itemDisplayName}</h1>
+				<h4>${item.seller}</h4>
+			</hgroup>
+		</header>
+		<figure>
+			<img src="${ImagePath}${item.imagePath}">
+		</figure>
+		<section>
+			<p>${item.itemDisplayName}</p>
+			<details>
 
 				<p id="header">${message}</p>
 				<br>
 
-					<summary>Product Features</summary>
-					<ul>
-						<li>Seller ${item.seller}</li>
-						<li>Price ${item.price}</li>
-						<li>Quantity  ${item.quantity}</li>
-						<li>Start Time ${item.startTime}</li>
-						<li>End Time ${item.endTime}</li>
-						<li>Location ${item.location}</li>
+				<summary>Product Features</summary>
+				<ul>
+					<li>Seller ${item.seller}</li>
+					<li>Price ${item.price}</li>
+					<li>Quantity ${item.quantity}</li>
+					<li>Start Time ${item.startTime}</li>
+					<li>End Time ${item.endTime}</li>
+					<li>Location ${item.location}</li>
+					<li>No of Bids ${noOfBids}</li>
+					<li>Current Bid ${prevBid}</li>
 
-						<li>No of Bids ${noOfBids}</li>
-						<li>Current Bid ${prevBid}</li>
 
+				</ul>
+			</details>
+			<form:form commandName="auction"
+				action="/auctionspace/Auction/registerUserforItemAuction"
+				class="well form-horizontal" method="post">
+				<input type="hidden" name="itemId" value="${item.itemId}" />
+				<input type="hidden" name="fname" value="${fname}" />
+				<input type="submit" value="Register" name="Register">
+			</form:form>
 
-					</ul>
-				</details>
-				<button>Register</button>
-				
-				<button id = "bid">Bid</button>
-			</section>
-		</div>
+			<button id="bid">Bid</button>
+		</section>
+	</div>
 	<a href="/auctionspace/index.jsp">Home</a>
-	
+	<script>
+		var DisplayButton = document.getElementById("bid");
+		DisplayButton.addEventListener('click', function(event) {
+			location.href = '/auctionspace/Bid/bidding/${item.itemId}';
+		})
 
-				<button>Bid</button>
-			</section>
-		</div>
-	<a href="/auctionspace/index.jsp">Home</a>
-<script>
-var DisplayButton = document.getElementById("bid");
-DisplayButton.addEventListener('click',function(event){
-	location.href='/auctionspace/Bid/bidding/${item.itemId}';
-})
-
-var LogOutButton = document.getElementById("logout");
-LogOutButton.addEventListener('click',function(event){
-location.href='/auctionspace/SignOut';
-})
-</script>
+		var LogOutButton = document.getElementById("logout");
+		LogOutButton.addEventListener('click', function(event) {
+			location.href = '/auctionspace/SignOut';
+		})
+	</script>
 
 </body>
 </html>

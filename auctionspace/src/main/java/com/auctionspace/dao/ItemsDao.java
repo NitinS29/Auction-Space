@@ -8,17 +8,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
-import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
 import com.auctionspace.model.ItemsModel;
-import com.auctionspace.model.UserModel;
 
 @Service
 public class ItemsDao {
@@ -42,6 +39,7 @@ public class ItemsDao {
 			item.setDescription(rs.getString("description"));
 			item.setSeller(rs.getString("seller"));
 			item.setLocation(rs.getString("location"));
+			item.setImagePath(rs.getString("image_path"));
 			return item;
 		}
 	}
@@ -73,12 +71,12 @@ public class ItemsDao {
 		return items;
 	}
 
-	public boolean addItem(ItemsModel items) {
+	public boolean addItem(ItemsModel items, String fileName) {
 		try {
 			logger.info("In add item method");
-			String sql = "insert into Items (item_display_name, price, quantity, start_time, end_time, seller, location, description) values (?, ?, ?, ?, ?, ?, ?, ?) ";
+			String sql = "insert into Items (item_display_name, price, quantity, start_time, end_time, seller, location, description, image_path) values (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 			logger.info("query=" + sql);
-			this.jdbcTemplate.update(sql, new Object[] {items.getItemDisplayName(), items.getPrice(), items.getQuantity(), items.getStartTime(), items.getEndTime(), items.getSeller(), items.getLocation(), items.getDescription()}) ;
+			this.jdbcTemplate.update(sql, new Object[] {items.getItemDisplayName(), items.getPrice(), items.getQuantity(), items.getStartTime(), items.getEndTime(), items.getSeller(), items.getLocation(), items.getDescription(), fileName}) ;
 		} catch (Exception e) {
 			logger.error("Error in addItem: " + e.getMessage());
 		}
@@ -89,7 +87,7 @@ public class ItemsDao {
 		ItemsModel item = null;
 		try {
 			String query = "select * from Items where item_id='" + itemId + "'";
-			logger.error("in getItemDetails: " + query);
+			logger.info("in getItemDetails: " + query);
 			item = this.jdbcTemplate.queryForObject(query,  new ItemMapper());
 		} catch (Exception e) {
 			logger.error("Error in getItemDetails: " + e.getMessage());
@@ -97,7 +95,6 @@ public class ItemsDao {
 		return item;
 	}
 
-	
 	public float getItemPrice(int item_id){
 		float item_price = 0;
 		float prevBid = 0;
@@ -111,12 +108,12 @@ public class ItemsDao {
 			logger.error("Error in getItemPrice: " + e.getMessage());
 		}
 		if (item_price > prevBid){
-		return item_price;
+			return item_price;
 		}else{
 			return prevBid;
 		}
 	}
-	
+
 	public String getSeller(int item_id){
 		String seller = "";
 		try {

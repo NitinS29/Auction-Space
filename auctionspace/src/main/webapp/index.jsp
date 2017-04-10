@@ -13,17 +13,7 @@
 <h1>Auction Space</h1>
 <span>An Auction site for students of UNC Charlotte.</span>
 </div>
-<a href = "Users/login" id="loginlink">LOG IN</a><a href = "#" id="registerlink">REGISTER/</a>
-<div id="myModal" class="modal">
-	<div class="modalcontent">
-  		<span class="close">&times;</span>
-  		<p>
-  	  		<input type="radio" name="user" id = "user1" value="seller">  Seller<br>
-  			<input type="radio" name="user" id = "user2" value="buyer">Buyer<br>
-  			<button id = "submitbutton" type="button" >Submit</button>	
-  		</p>
-	</div>
-</div>
+<a href = "Users/login" id="loginlink">LOG IN</a><a href = "/auctionspace/Users/registerUser" id="registerlink">REGISTER/</a>
 <br>
 <br>
 <div id="m">
@@ -41,38 +31,5 @@
 		<spring:url value="/resources/home-union-900.jpg" var="HomeImage"/>
 		<img src="${HomeImage}" height = 800 width = 1155>
 	</div>
-<script>
-var modal = document.getElementById('myModal');
-var btn = document.getElementById("registerlink");
-var span = document.getElementsByClassName("close")[0];
-
-btn.onclick = function() {
-    modal.style.display = "block";
-}
-
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
-var SubButton = document.getElementById("submitbutton");
-SubButton.addEventListener('click',function(event){
-	if(document.getElementById("user1").checked)
-
-	{
-		location.href='/auctionspace/Users/registerSeller';
-	}
-	
-	if(document.getElementById("user2").checked)
-	{
-		location.href='/auctionspace/Users/registerBuyer';
-	}
-})
-</script>
 </body>
 </html>

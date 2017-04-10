@@ -23,14 +23,16 @@
 
 <body id="AddItem">
 	<div class="container">
-		<form:form commandName="item" action="/auctionspace/Items/processAddItem"
-			class="well form-horizontal"  method="post">
+		<form:form commandName="item"
+			action="/auctionspace/Items/processAddItem"
+			class="well form-horizontal" method="post" enctype="multipart/form-data">
 			<fieldset>
 
 				<!-- Form Name -->
 				<legend>Add Item for Auction</legend>
-				<form:input path="seller" type="hidden" name="seller" value='${seller}'/> 
-				
+				<form:input path="seller" type="hidden" name="seller"
+					value='${seller}' />
+
 				<div class="form-group">
 					<form:label path="itemDisplayName" class="col-md-4 control-label">Item Name</form:label>
 					<div class="col-md-4 inputGroupContainer">
@@ -53,19 +55,15 @@
 					</div>
 				</div>
 
-				<!-- <div class="form-group">
+				<div class="form-group">
 					<form:label path="image" class="col-md-4 control-label">Image</form:label>
 					<div class="col-md-4 inputGroupContainer">
 						<div class="input-group">
-							<form:input type="file" name="image" size="10" required="required" class="form-control"
+							<form:input type="file" name="fileUpload" style="width: 135; height: 20;"  class="form-control"
 								path="image" id="image" placeholder="Item Image" />
 						</div>
 					</div>
-
 				</div>
-
-				</div>-->
-
 				<!-- Text input-->
 
 				<div class="form-group">

@@ -5,18 +5,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import com.auctionspace.dao.BidDao;
-
 import com.auctionspace.dao.ItemsDao;
 import com.auctionspace.dao.ManageUsersDao;
 import com.auctionspace.model.ItemsModel;
 
-import javax.servlet.annotation.MultipartConfig;
+import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +25,6 @@ import org.apache.log4j.Logger;
 
 @RestController
 @RequestMapping("/Items")
-@MultipartConfig(maxFileSize = 16177215) 
 public class ItemsController {
 	private static Logger logger = Logger.getLogger(ItemsController.class);
 
@@ -33,11 +33,9 @@ public class ItemsController {
 
 	@Autowired
 	public ManageUsersDao userService;
-	
 
 	@Autowired
-	public BidDao bidDao;
-	
+	public BidDao bidService;
 
 	@RequestMapping(value = "/getItemsList", method = RequestMethod.GET)
 	public @ResponseBody String getItemsList() {
@@ -55,9 +53,25 @@ public class ItemsController {
 	}
 
 	@RequestMapping(value = "/processAddItem", method = RequestMethod.POST)
-	public ModelAndView addItem(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute("item") ItemsModel item) {
-		itemService.addItem(item);
+	public ModelAndView addItem(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("item") ItemsModel item) {
+		String fileName = "";
+		String saveDirectory = "C:/Program Files/Apache Software Foundation/Tomcat 9.0/webapps/auctionspace/resources/static/images/";
+
+		if (item.getImage() != null && item.getImage().length > 0) {
+			try {
+				for (CommonsMultipartFile aFile : item.getImage()) {
+					if (!aFile.getOriginalFilename().equals("")) {
+						String filePath = saveDirectory +  item.getSeller() + "_" + item.getItemId() + "_" + aFile.getOriginalFilename();
+						aFile.transferTo(new File(filePath));
+						fileName = item.getSeller() + "_" + item.getItemId() + "_" + aFile.getOriginalFilename();
+						logger.info("File Path: " + fileName);
+					}
+				}
+			} catch (Exception ex) {
+				logger.error("Error in processAddItem: " + ex.getMessage());
+			}
+		}
+		itemService.addItem(item, fileName);
 		ModelAndView mav = new ModelAndView("DisplayItems");
 		mav.addObject("items", itemService.getAllItems().toString());
 		mav.addObject("itemName", item.getItemDisplayName());
@@ -72,16 +86,16 @@ public class ItemsController {
 		mav.addObject("seller", user);
 		return mav;
 	}
-	
-	@RequestMapping(value = "/getItemInformation/{itemId}", method = RequestMethod.GET)
-	public ModelAndView getItemInformation(@PathVariable("itemId")String itemId, HttpServletRequest request, HttpServletResponse response) {
+
+	@RequestMapping(value = "/getItemInformation", method = RequestMethod.GET)
+	public ModelAndView getItemInformation(@RequestParam("itemId") String itemId, @RequestParam("fname") String fname, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("ItemInformation");
 		ItemsModel itemInfo = itemService.getItemDetails(itemId);
 		mav.addObject("item", itemInfo);
 		mav.addObject("itemId", itemId);
-		mav.addObject("prevBid",bidDao.getLastBid(itemInfo.getItemId()));
-		mav.addObject("noOfBids",bidDao.getNoOfBids(itemInfo.getItemId()));
-
+		mav.addObject("fname", fname);
+		mav.addObject("prevBid",bidService.getLastBid(itemInfo.getItemId()));
+		mav.addObject("noOfBids",bidService.getNoOfBids(itemInfo.getItemId()));
 		return mav;
 	}
 }

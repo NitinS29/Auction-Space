@@ -18,9 +18,6 @@ public class UserModel {
 	@NotEmpty
 	@Email
 	private String emailId;
-	
-	private String userType;
-	
 
 	private String address;
 	
@@ -108,15 +105,5 @@ public class UserModel {
 	public void setAddress(String address)
 	{
 		this.address = address;
-	}
-	
-	public String getUserType()
-	{
-		return userType;
-	}
-	
-	public void setUserType(String userType)
-	{
-		this.userType = userType;
 	}
 }

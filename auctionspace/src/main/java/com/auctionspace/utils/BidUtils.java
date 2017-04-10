@@ -10,13 +10,11 @@ import com.auctionspace.model.ItemsModel;
 public class BidUtils implements IBid{
 	@Override
 	public IObserver removeBidder(IObserver iBidder) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void notifyBidder(String bidOwnerEmail, String itemName, float bidAmount) {
-		// TODO Auto-generated method stub
 		//call BidOwner.update function here
 		IObserver bidOwner = new BidOwner();
 		bidOwner.update(bidOwnerEmail,itemName,bidAmount);

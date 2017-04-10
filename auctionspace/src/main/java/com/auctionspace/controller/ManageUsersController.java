@@ -35,14 +35,7 @@ public class ManageUsersController {
 	@Autowired
 	public ManageUsersDao userService;
 
-	@RequestMapping(value = "/registerSeller", method = RequestMethod.GET)
-	public ModelAndView showRegister(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("SellerRegister");
-		mav.addObject("user", new UserModel());
-		return mav;
-	}
-
-	@RequestMapping(value = "/registerProcessSeller", method = RequestMethod.POST)
+	@RequestMapping(value = "/registerProcessUser", method = RequestMethod.POST)
 	public ModelAndView addUser(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("user") @Valid UserModel user) {
 		userService.registerUser(user);
@@ -53,22 +46,13 @@ public class ManageUsersController {
 		return new ModelAndView("Welcome", "user", user);
 	}
 
-	@RequestMapping(value = "/registerBuyer", method = RequestMethod.GET)
-	public ModelAndView showRegisterBuyer(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("BuyerRegister");
+	@RequestMapping(value = "/registerUser", method = RequestMethod.GET)
+	public ModelAndView showRegisterUser(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("UserRegister");
 		mav.addObject("user", new UserModel());
 		return mav;
 	}
 
-	@RequestMapping(value = "/registerProcessBuyer", method = RequestMethod.POST)
-	public ModelAndView addBuyer(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute("user") @Valid UserModel user) {
-		userService.registerUser(user);
-		HttpSession session = request.getSession();
-		session.setAttribute("userId", user.getUsername());
-
-		return new ModelAndView("Welcome", "user", user);
-	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView showLogin(HttpServletRequest request, HttpServletResponse response) {

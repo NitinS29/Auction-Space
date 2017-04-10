@@ -13,19 +13,15 @@
 </head>
 <body id = "Welcome">
 	<h1 id = "header">Welcome ${user.fname}</h1>
-<<<<<<< HEAD
 	<div align = "right">
 	<button id = "logout" type="button" >Log Out</button>
 	</div>
-=======
->>>>>>> db644268b2996fbafa08c561da2e4cd101b68e9d
 	<p></p>
 	<button id = "auctionItem" type="button" >Auction an Item</button>
 	<button id = "displayItems" type="button" >List all Items</button>
 <script>	
 var AuctionButton = document.getElementById("auctionItem");
 AuctionButton.addEventListener('click',function(event){
-<<<<<<< HEAD
 	location.href='/auctionspace/Items/addItem/${user.username}';
 })
 var DisplayButton = document.getElementById("displayItems");
@@ -36,8 +32,6 @@ DisplayButton.addEventListener('click',function(event){
 var LogOutButton = document.getElementById("logout");
 LogOutButton.addEventListener('click',function(event){
 location.href='/auctionspace/SignOut';
-=======
-	location.href='/auctionspace/Items/addItem/${user.fname}';
 })
 
 </script>	

@@ -1,13 +1,14 @@
 package com.auctionspace.model;
 
-import javax.servlet.http.Part;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class ItemsModel {
 	private int itemId;
 	private String itemDisplayName;
 	private float price;
 	private int quantity;
-	private Part image;
+	private CommonsMultipartFile[] image;
+	private String imagePath;
 	//private int noOfBids; 
 	private String startTime;
 	private String endTime;
@@ -98,11 +99,20 @@ public class ItemsModel {
 		this.description = description;
 	}
 	
-	public Part getImage() {
+	public CommonsMultipartFile[] getImage() {
 		return image;
 	}
 	
-	public void setImage(Part image) {
+	public void setImage(CommonsMultipartFile[] image) {
 		this.image = image;
 	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	
 }
