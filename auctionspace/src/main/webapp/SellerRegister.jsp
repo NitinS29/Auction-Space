@@ -13,7 +13,7 @@
 <body id="Register">
 <h3 id ="header" align="center">SELLER REGISTRATION</h3>
 <br>
-            <form:form commandName="user" action="registerProcessSeller" method="post">
+            <form:form commandName="user" action="registerProcessSeller" method="post" name="myForm" onsubmit="return validate();">
                 <table align="center">
                     <tr>
                         <td>
@@ -93,6 +93,11 @@
                     <br><br>
                     <table align="center">
                     <tr>
+                    	<td>
+                    		<p>${message}</p>
+                    	</td>
+                    </tr>
+                    <tr>
                         <td></td>
                         <td>
                             <form:button id="register" name="register" class="myButton">Register</form:button>
@@ -102,5 +107,49 @@
                     
                 </table>
             </form:form>
+        
+<script>
+function validate() {
+    var x = document.myForm.firstname.value;
+    if (x == "") {
+        alert("First Name must be filled out");
+        return false;
+    }
+    var x1 = document.myForm.username.value;
+    if (x1 == "") {
+        alert("UserName must be filled out");
+        return false;
+     }
+    var x2 = document.myForm.password.value;
+    if (x2 == "") {
+        alert("Password must be filled out");
+        return false;
+    }
+    var x3 = document.myForm.email.value;
+    if (x3 == "") {
+        alert("Email ID must be filled out");
+        return false;
+    }
+    var x4 = document.myForm.phone.value;
+    if (x4 == "") {
+        alert("Phone must be filled out");
+        return false;
+    }
+    if (x4.length != 10){
+    	alert("Phone number should have 10 digits.");
+    	return false;
+    }
+  
+    atpos = x3.indexOf("@");
+    dotpos = x3.lastIndexOf(".");
+    if (atpos < 1 || ( dotpos - atpos < 2 )) 
+    {
+       alert("Please enter correct email ID")
+       //document.myForm.EMail.focus() ;
+       return false;
+    }
+    return (true);
+}
+</script>        
 </body>
 </html>
