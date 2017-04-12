@@ -37,8 +37,7 @@ html {
 	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', endColorstr='#ffffff',GradientType=0 ); }
 
 header {
-	margin-bottom: 20px;
-	background: url('../images/apple.png') no-repeat right center; }
+	margin-bottom: 20px; }
  
 h1, h4 {
 	font-family: Helvetica Neue, Arial, sans-serif;

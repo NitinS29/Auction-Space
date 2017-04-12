@@ -34,7 +34,7 @@ public class BidDao {
 		float prevBid = 0;
 		try {
 			String query = "SELECT MAX(bid_amount) FROM Bid where item_id = ?";
-			logger.error("in getPreviousBid: " + query);
+			logger.info("in getPreviousBid: " + query);
 			prevBid = jdbcTemplate.queryForObject(query, new Object[] {item_id}, float.class);//   this.jdbcTemplate.queryForList(query);
 		} catch (Exception e) {
 		    ItemsDao itemsDao = new ItemsDao();
@@ -48,7 +48,7 @@ public class BidDao {
 		int noOfBids = 0;
 		try {
 			String query = "SELECT COUNT(bid_amount) FROM Bid where item_id = ?";
-			logger.error("in getNoOfBids: " + query);
+			logger.info("in getNoOfBids: " + query);
 			noOfBids = jdbcTemplate.queryForObject(query, new Object[] {item_id},int.class);//   this.jdbcTemplate.queryForList(query);
 		} catch (Exception e) {
 		    //ItemsDao itemsDao = new ItemsDao();

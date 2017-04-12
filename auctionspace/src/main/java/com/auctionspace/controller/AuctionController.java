@@ -31,16 +31,20 @@ public class AuctionController {
 	public AuctionDao auctionService;
 	@Autowired
 	public ItemsDao itemService;
+	@Autowired
+	ManageUsersDao userService;
 	
 	@RequestMapping(value = "/registerUserforItemAuction", method = RequestMethod.POST)
 	public ModelAndView registerUserForItemAuction(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("auction") AuctionModel auction) {
 		logger.info("Id: " + auction.getItemId() + "fname:"  + auction.getFname());
+		auction.setEmailId(userService.getUserEmailId(auction.getFname()));
 		auctionService.registerUser(auction);
 		ModelAndView mav = new ModelAndView("ItemInformation");
 		ItemsModel itemInfo = itemService.getItemDetails(Integer.toString(auction.getItemId()));
 		mav.addObject("item", itemInfo);
 		mav.addObject("itemId", Integer.toString(auction.getItemId()));
+		mav.addObject("message", "Registered for auction of " + itemInfo.getItemDisplayName());
 		return mav;
 	}
 }

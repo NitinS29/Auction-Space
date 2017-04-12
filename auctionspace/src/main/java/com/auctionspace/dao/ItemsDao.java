@@ -47,7 +47,7 @@ public class ItemsDao {
 		JSONArray items = new JSONArray();
 		try {
 			String query = "select * from Items";
-			logger.error("in getAllItems: " + query);
+			logger.info("in getAllItems: " + query);
 			List<Map<String, Object>> itemsList = this.jdbcTemplate.queryForList(query);
 			for (int i = 0; i < itemsList.size(); i++)
 			{
@@ -61,6 +61,7 @@ public class ItemsDao {
 				item.put("seller", itemsList.get(i).get("seller").toString());
 				item.put("location", itemsList.get(i).get("location").toString());
 				item.put("description", itemsList.get(i).get("description").toString());
+				item.put("imagePath", itemsList.get(i).get("image_path").toString());
 				//item.put("currentPrice", (float) itemsList.get(i).get("current_price"));
 				//item.put("noOfBids", (int) itemsList.get(i).get("no_of_bids"));
 				items.put(item);
@@ -124,6 +125,35 @@ public class ItemsDao {
 			logger.error("Error in getSeller: " + e.getMessage());
 		}
 		return seller;
+	}
+
+	public Object getAllItemsForUser(String fname) {
+		JSONArray items = new JSONArray();
+		try {
+			String query = "select * from Items where seller NOT LIKE '%" + fname + "%'";
+			logger.info("in getAllItemsForUser: " + query);
+			List<Map<String, Object>> itemsList = this.jdbcTemplate.queryForList(query);
+			for (int i = 0; i < itemsList.size(); i++)
+			{
+				JSONObject item = new JSONObject();
+				item.put("itemId", itemsList.get(i).get("item_id").toString());
+				item.put("itemDisplayName", itemsList.get(i).get("item_display_name").toString());
+				item.put("price", (float) itemsList.get(i).get("price"));
+				item.put("quantity", (int) itemsList.get(i).get("quantity"));
+				item.put("startTime", itemsList.get(i).get("start_time").toString());
+				item.put("endTime", itemsList.get(i).get("end_time").toString());
+				item.put("seller", itemsList.get(i).get("seller").toString());
+				item.put("location", itemsList.get(i).get("location").toString());
+				item.put("description", itemsList.get(i).get("description").toString());
+				item.put("imagePath", itemsList.get(i).get("image_path").toString());
+				//item.put("currentPrice", (float) itemsList.get(i).get("current_price"));
+				//item.put("noOfBids", (int) itemsList.get(i).get("no_of_bids"));
+				items.put(item);
+			}
+		} catch (Exception e) {
+			logger.error("Error in getAllItemsForUser: " + e.getMessage());
+		}
+		return items;
 	}
 
 }

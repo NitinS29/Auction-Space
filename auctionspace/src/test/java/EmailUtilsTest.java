@@ -1,10 +1,7 @@
-package com.auctionspace.utils;
-
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import com.auctionspace.model.ItemsModel;
+import com.auctionspace.utils.EmailUtils;
 
 public class EmailUtilsTest {
 
@@ -13,7 +10,7 @@ public class EmailUtilsTest {
 		ItemsModel testProduct = new ItemsModel();
 		EmailUtils testEmail = new EmailUtils();
 		testProduct.setItemDisplayName("TestProduct");
-		testEmail.send("email.auctionspace@gmail.com", testProduct);
+		testEmail.send("email.auctionspace@gmail.com", "mockItem", 100);
 	}
 
 }

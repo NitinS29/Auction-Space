@@ -6,7 +6,8 @@ CREATE TABLE Items (
 	end_time DATE, 
 	seller VARCHAR(500) NOT NULL, 
 	location VARCHAR(100), 
-	description VARCHAR(1000), 
+	description VARCHAR(1000),
+	image_path VARCHAR(1000),
 	PRIMARY KEY(item_id)
 );
 	
@@ -20,11 +21,11 @@ CREATE TABLE User (
 	phone int,
 	address varchar(50),
 	userType varchar(10),
-	PRIMARY KEY(username));
+	PRIMARY KEY(username)
 );
 
 CREATE TABLE bid (
-	bid_id int NOT NULL,
+	bid_id int NOT NULL AUTO_INCREMENT,
 	bid_amount float,
 	username varchar(40),
 	item_id int,

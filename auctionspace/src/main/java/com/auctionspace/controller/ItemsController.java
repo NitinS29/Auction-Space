@@ -43,6 +43,12 @@ public class ItemsController {
 		return itemService.getAllItems().toString();
 	}
 
+	@RequestMapping(value = "/getItemsList/{fname}", method = RequestMethod.GET)
+	public @ResponseBody String getItemsListForUser(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
+		logger.debug("In getAllItemsForUser");
+		return itemService.getAllItemsForUser(fname).toString();
+	}
+	
 	@RequestMapping(value = "/displayItems/{fname}", method = RequestMethod.GET)
 	public ModelAndView displayItems(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
 		logger.debug("In displayItems");

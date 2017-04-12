@@ -43,13 +43,16 @@ public class BidController {
 		ModelAndView mav = null;
 		//ItemsDao itemDao = new ItemsDao();	    
 		BidUtils bidUtils = new BidUtils();   
+		logger.info("itemId:" + itemId);
+		logger.info("itemId:" + bid.getitem_id());
 		//ManageUsersDao user = new ManageUsersDao();
 		if (bidUtils.validateBid(bid.getbid_amount(), itemService.getItemPrice(bid.getitem_id()))) {
 			result = bidService.addBid(bid);}
 		if(result){
 			mav = new ModelAndView("ItemInformation");
-			ItemsModel itemInfo = itemService.getItemDetails(itemId);
+			ItemsModel itemInfo = itemService.getItemDetails(Integer.toString(bid.getitem_id()));
 			mav.addObject("item", itemInfo);
+			mav.addObject("fname", bid.getusername());
 			mav.addObject("message","Bid was successful !!!");
 			mav.addObject("prevBid",bidService.getLastBid(bid.getitem_id()));
 			mav.addObject("noOfBids",bidService.getNoOfBids(bid.getitem_id()));
@@ -57,6 +60,7 @@ public class BidController {
 		} else {
 			mav = new ModelAndView("ItemInformation");
 			ItemsModel itemInfo = itemService.getItemDetails(itemId);
+			mav.addObject("fname", bid.getusername());
 			mav.addObject("item", itemInfo);
 			mav.addObject("prevBid",bidService.getLastBid(bid.getitem_id()));
 			mav.addObject("noOfBids",bidService.getNoOfBids(bid.getitem_id()));
@@ -69,9 +73,10 @@ public class BidController {
 	public ModelAndView getBid(@PathVariable String itemId, HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("bid") BidModel bid) {
 		ModelAndView mav = new ModelAndView("Bid");
+		ItemsModel itemInfo = itemService.getItemDetails(itemId);
 		mav.addObject("user", request.getSession().getAttribute("userId"));
 		mav.addObject("itemId", itemId);
-		//mav.addObject("item",itemModel);
+		mav.addObject("item",itemInfo);
 		//mav.addObject("Bid", new BidModel());
 		return mav;
 

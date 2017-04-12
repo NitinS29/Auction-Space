@@ -49,12 +49,12 @@ public class ManageUsersDao implements IManageUsersDao{
 
 	@Override
 	public String getUserEmailId(String fname) {
-		Map<String, Object> user = null;
+		List<UserModel> user = null;
 		try {
-			String query = "select emailId from User where username=?";
+			String query = "select * from User where username='" + fname + "'";
 			logger.debug("query " + query);
-			user = jdbctemp.queryForMap(query, new Object[]{fname});
-			return user.get("emailId").toString();
+			user = jdbctemp.query(query, new UserMapper());
+			return user.get(0).getEmail().toString();
 		} 
 		catch(Exception e) {
 			logger.error("Error in getUserEmailId: " + e.getMessage());
@@ -64,16 +64,22 @@ public class ManageUsersDao implements IManageUsersDao{
 }
 
 class UserMapper implements RowMapper<UserModel> {
+	private static Logger logger = Logger.getLogger(UserMapper.class);
 	public UserModel mapRow(ResultSet rs, int arg1) throws SQLException {
 		UserModel user = new UserModel();
-		user.setFname(rs.getString("fname"));
-		user.setMname(rs.getString("mname"));
-		user.setLname(rs.getString("lname"));
-		user.setEmail(rs.getString("emailId"));
-		user.setUsername(rs.getString("username"));
-		user.setPassword(rs.getString("password"));
-		user.setPhone(rs.getInt("phone"));
-		user.setAddress(rs.getString("address"));
+		try {
+			user.setFname(rs.getString("fname"));
+			user.setMname(rs.getString("mname"));
+			user.setLname(rs.getString("lname"));
+			user.setEmail(rs.getString("emailId"));
+			user.setUsername(rs.getString("username"));
+			user.setPassword(rs.getString("password"));
+			user.setPhone(rs.getInt("phone"));
+			user.setAddress(rs.getString("address"));
+			logger.info("Returning from usermapper" + user.getEmail());}
+		catch(Exception e) {
+			logger.debug("Error in usermapper");
+		}
 		return user;
 	}
 
