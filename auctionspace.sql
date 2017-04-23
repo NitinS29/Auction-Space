@@ -8,6 +8,7 @@ CREATE TABLE Items (
 	location VARCHAR(100), 
 	description VARCHAR(1000),
 	image_path VARCHAR(1000),
+	status VARCHAR(15),
 	PRIMARY KEY(item_id)
 );
 	
@@ -39,3 +40,17 @@ CREATE TABLE Registered_Users (
 	emailId varchar(30),
 	item_id INT
 );
+
+SET GLOBAL event_scheduler = ON;
+delimiter |
+
+CREATE EVENT changeStatus
+    ON SCHEDULE
+		EVERY 5 SECOND
+    DO
+		BEGIN
+			UPDATE ssdiproject.items SET status = 'Closed' where end_time = curdate();
+			UPDATE ssdiproject.items SET status = 'Active' where start_time = curdate();
+
+	END |
+delimiter ;	 
