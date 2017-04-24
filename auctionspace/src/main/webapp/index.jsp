@@ -124,6 +124,7 @@
               <div class="button navbar-right">
                   <button class="navbar-btn nav-button wow bounceInRight login" data-wow-delay="0.8s"><a href="Users/login">Login</a></button>
                   <button class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.6s"><a href = "/auctionspace/Users/registerUser">Sign up</a></button>
+		  <button class="navbar-btn nav-button wow bounceInRight admin" data-wow-delay="0.8s"><a href="Users/Admin">Admin</a></button>
               </div>
               <ul class="main-nav nav navbar-nav navbar-right">
                 <li class="wow fadeInDown" data-wow-delay="0s"><a class="active" href="#">Home</a></li>
