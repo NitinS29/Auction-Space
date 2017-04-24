@@ -41,9 +41,15 @@ public class ManageUsersDao implements IManageUsersDao{
 
 	@Override
 	public UserModel validateUser(LoginModel login) {
-		String selectUserQuery = "select * from User where username='" + login.getUsername() + "' and password='" + login.getPassword()
-		+ "'";
-		List<UserModel> users = jdbctemp.query(selectUserQuery, new UserMapper());
+		
+		String selectUserType = "select * from User where usertype='" + "admin'";
+		if(selectUserType.equals("admin")){
+			String selectUserQuery = "select * from User where username='" + login.getUsername() + "' and password='" + login.getPassword()+ "'";
+			List<UserModel> users = jdbctemp.query(selectUserQuery, new UserMapper());
+		}else{
+			String selectUserQuery = "select * from User where username='" + login.getUsername() + "' and password='" + login.getPassword()+ "'";
+			List<UserModel> users = jdbctemp.query(selectUserQuery, new UserMapper());
+		}
 		return users.size() > 0 ? users.get(0) : null;
 	}
 
