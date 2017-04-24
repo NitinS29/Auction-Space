@@ -16,6 +16,7 @@ public class ItemsModel {
 	private String location;
 	//private float currentPrice;
 	private String description;
+	private String status;
 
 	public int getItemId() {
 		return itemId;
@@ -115,4 +116,11 @@ public class ItemsModel {
 		this.imagePath = imagePath;
 	}
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

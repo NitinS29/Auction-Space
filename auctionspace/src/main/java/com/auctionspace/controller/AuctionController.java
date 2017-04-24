@@ -5,11 +5,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.auctionspace.dao.AuctionDao;
+import com.auctionspace.dao.BidDao;
 import com.auctionspace.dao.ItemsDao;
 import com.auctionspace.dao.ManageUsersDao;
 import com.auctionspace.model.AuctionModel;
@@ -33,6 +35,8 @@ public class AuctionController {
 	public ItemsDao itemService;
 	@Autowired
 	ManageUsersDao userService;
+	@Autowired
+	BidDao bidService;
 	
 	@RequestMapping(value = "/registerUserforItemAuction", method = RequestMethod.POST)
 	public ModelAndView registerUserForItemAuction(HttpServletRequest request, HttpServletResponse response,
@@ -47,4 +51,68 @@ public class AuctionController {
 		mav.addObject("message", "Registered for auction of " + itemInfo.getItemDisplayName());
 		return mav;
 	}
+	
+	@RequestMapping(value = "/getAllAuctions/{fname}" , method=RequestMethod.GET)
+	public @ResponseBody String getAllAuctionInfo(@PathVariable("fname")String fname,HttpServletRequest request, HttpServletResponse response) {
+		logger.info("In getAllItemsForAdmin:");
+		//ModelAndView mav = new ModelAndView("AllAuctionInfo");
+		//mav.addObject("items", itemService.getAllItemsForAdmin().toString());
+		//mav.addObject("fname", fname);
+		return  itemService.getAllItemsForAdmin().toString();
+	}
+	
+	@RequestMapping(value = "/displayItemsAdmin/{fname}", method = RequestMethod.GET)
+	public ModelAndView displayItemsAdmin(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
+		logger.debug("In displayItemsAdmin");
+		ModelAndView mav = new ModelAndView("AllAuctionInfo");
+		mav.addObject("items", itemService.getAllItemsForAdmin().toString());
+		mav.addObject("fname", fname);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/stopAuctionAdmin", method = RequestMethod.POST)
+	public ModelAndView stopAuction(HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute("auction") AuctionModel auction) {
+		logger.debug("In stopAuction");
+		auctionService.stopAuction(auction.getItemId());
+		/*ModelAndView mav = new ModelAndView("AllAuctionInfo");
+		mav.addObject("items", itemService.getAllItemsForAdmin().toString());
+		mav.addObject("fname", fname);
+		return mav;*/
+		ModelAndView mav = new ModelAndView("ItemInfoAdmin");
+		ItemsModel itemInfo = itemService.getItemDetails(Integer.toString(auction.getItemId()));
+		mav.addObject("item", itemInfo);
+		mav.addObject("itemId", Integer.toString(auction.getItemId()));
+		mav.addObject("message", "The auction has been stopped for " + itemInfo.getItemDisplayName());
+		return mav;
+	}
+	
+	@RequestMapping(value = "/stopAuction/{itemId}", method = RequestMethod.GET)
+	public ModelAndView stopAuctionAdmin(@PathVariable String itemId, HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute("auction") AuctionModel auction) {
+		logger.debug("In stopAuction");
+		auctionService.stopAuction(Integer.parseInt(itemId));
+		/*ModelAndView mav = new ModelAndView("AllAuctionInfo");
+		mav.addObject("items", itemService.getAllItemsForAdmin().toString());
+		mav.addObject("fname", fname);
+		return mav;*/
+		ModelAndView mav = new ModelAndView("ItemInfoAdmin");
+		ItemsModel itemInfo = itemService.getItemDetails(itemId);
+		mav.addObject("item", itemInfo);
+		mav.addObject("itemId", itemId);
+		mav.addObject("message", "The auction has been stopped for " + itemInfo.getItemDisplayName());
+		return mav;
+	}
+	
+	@RequestMapping(value = "/getItemInfo", method = RequestMethod.GET)
+	public ModelAndView getItemInformation(@RequestParam("itemId") String itemId, @RequestParam("fname") String fname, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("ItemInformation");
+		ItemsModel itemInfo = itemService.getItemDetails(itemId);
+		mav.addObject("item", itemInfo);
+		mav.addObject("itemId", itemId);
+		mav.addObject("fname", fname);
+		mav.addObject("prevBid",bidService.getLastBid(itemInfo.getItemId()));
+		mav.addObject("noOfBids",bidService.getNoOfBids(itemInfo.getItemId()));
+		return mav;
+}
 }

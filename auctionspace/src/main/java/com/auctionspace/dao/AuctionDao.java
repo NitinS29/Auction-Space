@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import com.auctionspace.model.AuctionModel;
+import com.auctionspace.model.ItemsModel;
 
 @Service
 public class AuctionDao {
@@ -60,5 +61,17 @@ public class AuctionDao {
 			logger.error("Error in registerUser: " + e.getMessage());
 		}	
 		return registeredUsers;
+	}
+	
+	public boolean stopAuction(int itemId) {
+		try {
+			logger.info("In stop auction method");
+			String sql = "update items set status='Stopped' where item_id = ?";
+			logger.info("query=" + sql);
+			this.jdbcTemplate.update(sql, new Object[] {itemId}) ;
+		} catch (Exception e) {
+			logger.error("Error in addItem: " + e.getMessage());
+		}
+		return true;
 	}
 }

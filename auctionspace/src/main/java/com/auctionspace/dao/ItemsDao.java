@@ -40,6 +40,7 @@ public class ItemsDao {
 			item.setSeller(rs.getString("seller"));
 			item.setLocation(rs.getString("location"));
 			item.setImagePath(rs.getString("image_path"));
+			item.setStatus(rs.getString("status"));
 			return item;
 		}
 	}
@@ -156,4 +157,34 @@ public class ItemsDao {
 		return items;
 	}
 
+	public Object getAllItemsForAdmin() {
+		JSONArray items = new JSONArray();
+		try {
+			String query = "select a.*, COUNT(b.bid_amount) as noOfBids, MAX(b.bid_amount) as currentBid from items a join Bid b on a.item_id = b.item_id group by b.item_id";
+			logger.info("in getAllItemsForUser: " + query);
+			List<Map<String, Object>> itemsList = this.jdbcTemplate.queryForList(query);
+			for (int i = 0; i < itemsList.size(); i++)
+			{
+				JSONObject item = new JSONObject();
+				item.put("itemId", itemsList.get(i).get("item_id").toString());
+				item.put("itemDisplayName", itemsList.get(i).get("item_display_name").toString());
+				item.put("price", (float) itemsList.get(i).get("price"));
+				item.put("quantity", (int) itemsList.get(i).get("quantity"));
+				item.put("startTime", itemsList.get(i).get("start_time").toString());
+				item.put("endTime", itemsList.get(i).get("end_time").toString());
+				item.put("seller", itemsList.get(i).get("seller").toString());
+				item.put("location", itemsList.get(i).get("location").toString());
+				item.put("description", itemsList.get(i).get("description").toString());
+				item.put("imagePath", itemsList.get(i).get("image_path").toString());
+				item.put("status", itemsList.get(i).get("status").toString());
+				item.put("currentBid", (float) itemsList.get(i).get("currentBid"));
+				item.put("noOfBids", Long.valueOf(itemsList.get(i).get("noOfBids").toString()).intValue());
+				items.put(item);
+			}
+		} catch (Exception e) {
+			logger.error("Error in getAllItemsForAdmin: " + e.getMessage());
+		}
+		return items;
+	}	
+	
 }

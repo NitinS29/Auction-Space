@@ -1,17 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
- <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>   
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<!DOCTYPE html>
 <html>
 <head>
-<title >Welcome</title>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="company is a free job board template">
@@ -40,9 +37,22 @@
         <link rel="stylesheet" href="${cssPath}/owl.transitions.css">
         <link rel="stylesheet" href="${rootPath}/style.css">
         <link rel="stylesheet" href="${rootPath}/responsive.css">
-        <script src="${jsPath}/vendor/modernizr-2.6.2.min.js"></script>
+		<title>Item Information</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<spring:url value="/resources/static/css/displayItems.css"
+	var="displayItemsCss" />
+<link href="${displayItemsCss}" rel="stylesheet">
+<spring:url value="/resources/static/styles/normalize.css"
+	var="NormalizeCss" />
+<link href="${NormalizeCss}" rel="stylesheet">
+<spring:url value="/resources/static/styles/styles.css" var="StylesCss" />
+<spring:url value="/resources/static/images/" var="ImagePath" />
+<link href="${StylesCss}" rel="stylesheet">
+<script src="/js/jquery.js"></script>
+<script src="/js/modernizr.js"></script>
 </head>
-<body id = "Welcome">
+<body>
  <div id="preloader">
             <div id="status">&nbsp;</div>
         </div>
@@ -97,23 +107,58 @@
 						</button>
 					</div>
               <ul class="main-nav nav navbar-nav navbar-right">
-                <li class="wow fadeInDown" data-wow-delay="0s"><a class="active" href="/auctionspace/index.jsp">Home</a></li>
+                <li class="wow fadeInDown" data-wow-delay="0s"><a class="active" href="#">Home</a></li>
                 <li class="wow fadeInDown" data-wow-delay="0.1s"><a href="#">Ongoing Auctions</a></li>
-                <li class="wow fadeInDown" data-wow-delay="0.2s"><a href="/auctionspace/Auction/displayItemsAdmin/${user.username}">All Auctions</a></li>
-                <li class="wow fadeInDown" data-wow-delay="0.2s"><a href="/auctionspace/Items/displayItems/${user.username}">Buy</a></li>
-                <li class="wow fadeInDown" data-wow-delay="0.3s"><a href="/auctionspace/Items/addItem/${user.username}">Sell</a></li>
+                <li class="wow fadeInDown" data-wow-delay="0.2s"><a href="/auctionspace/Items/displayItems/${fname}">Buy</a></li>
+                <li class="wow fadeInDown" data-wow-delay="0.3s"><a href="/auctionspace/Items/addItem/${fname}">Sell</a></li>
 				<li class="wow fadeInDown" data-wow-delay="0.3s"><a href="#"></a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
         </nav>
-		
-						<div class="row page-title text-center wow bounce"
-					data-wow-delay="1s">
-					<h3>Welcome ${user.fname}</h3>
-					<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-				</div>
-        <div class="footer-area">
+
+	<div class="product clear">
+		<header>
+			<hgroup>
+				<h1>${item.itemDisplayName}</h1>
+				<h4>${item.seller}</h4>
+			</hgroup>
+		</header>
+		<figure>
+			<img src="${ImagePath}${item.imagePath}">
+		</figure>
+		<section>
+			<p>${item.itemDisplayName}</p>
+			<details>
+				<summary>Product Features</summary>
+				<ul>
+					<li>Seller: ${item.seller}</li>
+					<li>Description: ${item.description}</li>
+					<li>Price: ${item.price}</li>
+					<li>Quantity: ${item.quantity}</li>
+					<li>Start Time: ${item.startTime}</li>
+					<li>End Time: ${item.endTime}</li>
+					<li>Location: ${item.location}</li>
+					<li>Status: ${item.status}</li>
+					<li>No of Bids: ${noOfBids}</li>
+					<li>Current Bid: ${prevBid}</li>
+				</ul>
+			</details>
+			<form:form commandName="auction"
+				action="/auctionspace/Auction/registerUserforItemAuction"
+				class="well form-horizontal" method="post">
+				<input type="hidden" name="itemId" value="${item.itemId}" />
+				<input type="hidden" name="fname" value="${fname}" />
+				<input class="tbl-apply" type="submit" value="Register" name="Register">
+			</form:form>
+	
+			<button id="Stop">Stop</button>
+			<br><br>
+			<p id="header"><b>${message}</b></p>
+		</section>
+	</div>
+	<br><br><br><br><br>
+	<div class="footer-area">
             <div class="container">
                 <div class="row footer">
                     <div class="col-md-4">
@@ -149,7 +194,13 @@
         <script src="${jsPath}/owl.carousel.min.js"></script>
         <script src="${jsPath}/wow.js"></script>
         <script src="${jsPath}/main.js"></script>
-    </body>
-</script>	
+	<script>
+		var DisplayButton = document.getElementById("Stop");
+		DisplayButton.addEventListener('click', function(event) {
+			location.href = '/auctionspace/Auction/stopAuction/${item.itemId}';
+		})
+
+	</script>
+
 </body>
 </html>
