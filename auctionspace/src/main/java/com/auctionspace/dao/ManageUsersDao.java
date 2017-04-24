@@ -41,15 +41,9 @@ public class ManageUsersDao implements IManageUsersDao{
 
 	@Override
 	public UserModel validateUser(LoginModel login) {
-		
-		String selectUserType = "select * from User where usertype='" + "admin'";
-		if(selectUserType.equals("admin")){
-			String selectUserQuery = "select * from User where username='" + login.getUsername() + "' and password='" + login.getPassword()+ "'";
-			List<UserModel> users = jdbctemp.query(selectUserQuery, new UserMapper());
-		}else{
-			String selectUserQuery = "select * from User where username='" + login.getUsername() + "' and password='" + login.getPassword()+ "'";
-			List<UserModel> users = jdbctemp.query(selectUserQuery, new UserMapper());
-		}
+		String selectUserQuery = "select * from User where username='" + login.getUsername() + "' and password='" + login.getPassword()
+		+ "'";
+		List<UserModel> users = jdbctemp.query(selectUserQuery, new UserMapper());
 		return users.size() > 0 ? users.get(0) : null;
 	}
 
@@ -66,6 +60,19 @@ public class ManageUsersDao implements IManageUsersDao{
 			logger.error("Error in getUserEmailId: " + e.getMessage());
 		}
 		return null;
+	}
+	
+	public UserModel validateAdmin(LoginModel login) {
+		List<UserModel> users = null;
+		String selectUserType = "select * from User where usertype='" + "admin'";
+		if(selectUserType.equals("admin")){
+			String selectUserQuery = "select * from User where username='" + login.getUsername() + "' and password='" + login.getPassword()+ "'";
+			users = jdbctemp.query(selectUserQuery, new UserMapper());
+		}else{
+			String selectUserQuery = "select * from User where username='" + login.getUsername() + "' and password='" + login.getPassword()+ "'";
+			users = jdbctemp.query(selectUserQuery, new UserMapper());
+		}
+		return users.size() > 0 ? users.get(0) : null;
 	}
 }
 
