@@ -48,12 +48,27 @@ public class ItemsController {
 		logger.debug("In getAllItemsForUser");
 		return itemService.getAllItemsForUser(fname).toString();
 	}
+
+	@RequestMapping(value = "/getItemsAuctionedByUser/{fname}", method = RequestMethod.GET)
+	public @ResponseBody String getItemsAuctionedByUser(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
+		logger.debug("In getItemsAuctionedByUser");
+		return itemService.getItemsAuctionedByUser(fname).toString();
+	}
 	
 	@RequestMapping(value = "/displayItems/{fname}", method = RequestMethod.GET)
 	public ModelAndView displayItems(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
 		logger.debug("In displayItems");
 		ModelAndView mav = new ModelAndView("DisplayItems");
 		mav.addObject("items", itemService.getAllItems().toString());
+		mav.addObject("fname", fname);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/displayAuctionedItems/{fname}", method = RequestMethod.GET)
+	public ModelAndView displayAuctionedItems(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
+		logger.debug("In displayAuctionedItems");
+		ModelAndView mav = new ModelAndView("AuctionedItems");
+		mav.addObject("items", itemService.getItemsAuctionedByUser(fname).toString());
 		mav.addObject("fname", fname);
 		return mav;
 	}
