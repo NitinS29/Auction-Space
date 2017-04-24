@@ -2,6 +2,7 @@ package com.auctionspace.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,9 @@ import com.auctionspace.dao.BidDao;
 import com.auctionspace.model.BidModel;
 import com.auctionspace.model.ItemsModel;
 import com.auctionspace.model.LoginModel;
+import com.auctionspace.model.UserModel;
 import com.auctionspace.utils.BidUtils;
+import com.auctionspace.utils.EmailUtils;
 //import com.auctionspace.utils.ItemUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -79,6 +82,28 @@ public class BidController {
 		mav.addObject("item",itemInfo);
 		//mav.addObject("Bid", new BidModel());
 		return mav;
+	}
 
+	@RequestMapping(value = "/sendEmailDetails/{itemId}")
+	public ModelAndView sendEmailDetails(@PathVariable int itemId, HttpServletRequest request, HttpServletResponse response) {
+		//get the seller email id from seller name
+		String to = userService.getUserEmailId(itemService.getSeller(itemId));
+
+		//get item details from the item table
+		ItemsModel itemInfo = itemService.getItemDetails(Integer.toString(itemId));
+
+		//get username from the bid table
+		BidModel bidInfo = bidService.getWinningBid(itemId);
+
+		//get the buyer details from the bid table
+		UserModel userInfo = userService.getUserDetails(bidInfo.getusername());
+
+		EmailUtils util = new EmailUtils();
+		util.sendBuyerDetails(to, itemInfo, bidInfo, userInfo);
+		ModelAndView mav = new ModelAndView("Welcome");
+		mav.addObject("user", userInfo);
+		HttpSession session = request.getSession();
+		session.setAttribute("userId", userInfo.getUsername());
+		return mav;
 	}
 }

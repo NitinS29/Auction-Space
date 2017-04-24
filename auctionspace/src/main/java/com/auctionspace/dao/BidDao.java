@@ -28,8 +28,9 @@ public class BidDao {
 	private static Logger logger = Logger.getLogger(BidDao.class);
 
 	public static BidDao getInstance() {
-		return instance;}
-	
+		return instance;
+	}
+
 	public float getLastBid(int item_id){
 		float prevBid = 0;
 		try {
@@ -37,13 +38,13 @@ public class BidDao {
 			logger.info("in getPreviousBid: " + query);
 			prevBid = jdbcTemplate.queryForObject(query, new Object[] {item_id}, float.class);//   this.jdbcTemplate.queryForList(query);
 		} catch (Exception e) {
-		    ItemsDao itemsDao = new ItemsDao();
+			ItemsDao itemsDao = new ItemsDao();
 			prevBid = itemsDao.getItemPrice(item_id);
 			logger.error("Error in getPrevBid: " + e.getMessage());
 		}
 		return prevBid;
 	}
-	
+
 	public int getNoOfBids(int item_id){
 		int noOfBids = 0;
 		try {
@@ -51,13 +52,13 @@ public class BidDao {
 			logger.info("in getNoOfBids: " + query);
 			noOfBids = jdbcTemplate.queryForObject(query, new Object[] {item_id},int.class);//   this.jdbcTemplate.queryForList(query);
 		} catch (Exception e) {
-		    //ItemsDao itemsDao = new ItemsDao();
-		    //noOfBids = itemsDao.getItemPrice(item_id);
+			//ItemsDao itemsDao = new ItemsDao();
+			//noOfBids = itemsDao.getItemPrice(item_id);
 			logger.error("Error in getNoOfBids: " + e.getMessage());
 		}
 		return noOfBids;
 	}
-	
+
 	public boolean addBid(BidModel bid) {
 		try {
 			logger.info("In add bid method");
@@ -74,7 +75,9 @@ public class BidDao {
 	public BidModel getWinningBid(int itemId) {
 		BidModel bid = null;
 		try {
-			String query = "select * from bid where item_id='" + itemId + "'";
+			String query = "select b.item_id, b.bid_id, b.username, b.bid_amount from items as i, bid as b "
+					+ "where b.bid_amount = ( select max(bid_amount) from bid group by item_id having item_id='" + itemId 
+					+ "') and b.item_id = i.item_id and i.item_id='" + itemId + "' and i.status = 'Closed'";
 			logger.info("in getWinningBid: " + query);
 			bid = jdbcTemplate.queryForObject(query,  new BidMapper());
 		} catch (Exception e) {
@@ -83,13 +86,13 @@ public class BidDao {
 		return bid;
 	}
 }
-	class BidMapper implements RowMapper<BidModel> {
-		public BidModel mapRow(ResultSet rs, int arg1) throws SQLException {
-		  BidModel bid = new BidModel();
-		  bid.setbid_id(rs.getInt("bid_id"));
-		  bid.setbid_amount(rs.getFloat("bid_amount"));
-		  bid.setitem_id(rs.getInt("item_id"));
-		  bid.setusername(rs.getString("username"));
-		  return bid;
-		}
+class BidMapper implements RowMapper<BidModel> {
+	public BidModel mapRow(ResultSet rs, int arg1) throws SQLException {
+		BidModel bid = new BidModel();
+		bid.setbid_id(rs.getInt("bid_id"));
+		bid.setbid_amount(rs.getFloat("bid_amount"));
+		bid.setitem_id(rs.getInt("item_id"));
+		bid.setusername(rs.getString("username"));
+		return bid;
+	}
 }

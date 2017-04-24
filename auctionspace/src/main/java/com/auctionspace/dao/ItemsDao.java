@@ -25,7 +25,12 @@ public class ItemsDao {
 	@Autowired 
 	JdbcTemplate jdbcTemplate;
 
+	public static ItemsDao instance = new ItemsDao();
 	private static Logger logger = Logger.getLogger(ItemsDao.class);
+
+	public static ItemsDao getInstance() {
+		return instance;
+	}
 
 	class ItemMapper implements RowMapper<ItemsModel> {
 		public ItemsModel mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -120,7 +125,7 @@ public class ItemsDao {
 		String seller = "";
 		try {
 			String query = "SELECT seller FROM Items where item_id =?";
-			logger.error("in getSeller: " + query);		
+			logger.info("in getSeller: " + query);		
 			seller = this.jdbcTemplate.queryForObject(query, new Object[] {item_id}, String.class);//   this.jdbcTemplate.queryForList(query);
 		} catch (Exception e) {
 			logger.error("Error in getSeller: " + e.getMessage());
@@ -185,7 +190,7 @@ public class ItemsDao {
 		}
 		return items;
 	}
-	
+
 	public Object getAllItemsForAdmin() {
 		JSONArray items = new JSONArray();
 		try {
@@ -215,5 +220,5 @@ public class ItemsDao {
 		}
 		return items;
 	}	
-	
+
 }

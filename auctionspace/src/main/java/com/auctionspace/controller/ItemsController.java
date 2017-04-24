@@ -15,6 +15,7 @@ import com.auctionspace.dao.BidDao;
 import com.auctionspace.dao.ItemsDao;
 import com.auctionspace.dao.ManageUsersDao;
 import com.auctionspace.model.ItemsModel;
+import com.auctionspace.utils.EmailUtils;
 
 import java.io.File;
 
@@ -54,7 +55,13 @@ public class ItemsController {
 		logger.debug("In getItemsAuctionedByUser");
 		return itemService.getItemsAuctionedByUser(fname).toString();
 	}
-	
+
+	@RequestMapping(value = "/getItemsBoughtByUser/{fname}", method = RequestMethod.GET)
+	public @ResponseBody String getItemsBoughtByUser(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
+		logger.debug("In getItemsAuctionedByUser");
+		return itemService.getItemsAuctionedByUser(fname).toString();
+	}
+
 	@RequestMapping(value = "/displayItems/{fname}", method = RequestMethod.GET)
 	public ModelAndView displayItems(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
 		logger.debug("In displayItems");
@@ -63,7 +70,7 @@ public class ItemsController {
 		mav.addObject("fname", fname);
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/displayAuctionedItems/{fname}", method = RequestMethod.GET)
 	public ModelAndView displayAuctionedItems(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
 		logger.debug("In displayAuctionedItems");
