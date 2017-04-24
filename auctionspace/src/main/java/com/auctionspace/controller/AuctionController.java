@@ -70,24 +70,31 @@ public class AuctionController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/stopAuctionAdmin", method = RequestMethod.POST)
-	public ModelAndView stopAuction(HttpServletRequest request, HttpServletResponse response,
+	@RequestMapping(value = "/ItemInfoAdmin", method = RequestMethod.GET)
+	public ModelAndView stopAuction(@RequestParam("itemId") String itemId, @RequestParam("fname") String fname, HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("auction") AuctionModel auction) {
-		logger.debug("In stopAuction");
-		auctionService.stopAuction(auction.getItemId());
+		logger.debug("In stopAuctionAdmin");
+		//auctionService.stopAuction(auction.getItemId());
 		/*ModelAndView mav = new ModelAndView("AllAuctionInfo");
 		mav.addObject("items", itemService.getAllItemsForAdmin().toString());
 		mav.addObject("fname", fname);
 		return mav;*/
 		ModelAndView mav = new ModelAndView("ItemInfoAdmin");
 		ItemsModel itemInfo = itemService.getItemDetails(Integer.toString(auction.getItemId()));
+		//mav.addObject("item", itemInfo);
+		//mav.addObject("itemId", Integer.toString(auction.getItemId()));
+		//mav.addObject("message", "The auction has been stopped for " + itemInfo.getItemDisplayName());
+		//ItemsModel itemInfo = itemService.getItemDetails(itemId);
 		mav.addObject("item", itemInfo);
-		mav.addObject("itemId", Integer.toString(auction.getItemId()));
-		mav.addObject("message", "The auction has been stopped for " + itemInfo.getItemDisplayName());
+		mav.addObject("itemId", itemId);
+		mav.addObject("fname", fname);
+		mav.addObject("prevBid",bidService.getLastBid(itemInfo.getItemId()));
+		mav.addObject("noOfBids",bidService.getNoOfBids(itemInfo.getItemId()));
 		return mav;
+		//return mav;
 	}
 	
-	@RequestMapping(value = "/stopAuction/{itemId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/stopAuction/{itemId}" ,method = RequestMethod.POST)
 	public ModelAndView stopAuctionAdmin(@PathVariable String itemId, HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("auction") AuctionModel auction) {
 		logger.debug("In stopAuction");

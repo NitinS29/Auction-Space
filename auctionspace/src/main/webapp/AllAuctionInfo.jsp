@@ -201,7 +201,7 @@
 										alt=""></td>
 									<td class="tbl-title"><h4>
 											<a
-												ng-href="/auctionspace/Auction/getItemInfo?itemId={{itemDetails.itemId}}&fname=${fname}" /><br>
+												ng-href="/auctionspace/Auction/ItemInfoAdmin?itemId={{itemDetails.itemId}}&fname=${fname}" /><br>
 											<span class="job-type">{{itemDetails.itemDisplayName}}</span>
 										</h4></td>
 									<td><p>{{itemDetails.quantity}}</p></td>
@@ -216,7 +216,7 @@
 									<td><p>{{itemDetails.currentBid}}</p></td>
 									<td><p>{{itemDetails.status}}</p></td>
 									<td class="tbl-apply"><form:form modelAttribute="auction"
-											action="/auctionspace/Auction/stopAuctionAdmin"
+											action="/auctionspace/Auction/stopAuction/{{itemDetails.itemId}}"
 											class="well form-horizontal" method="post">
 											<input type="hidden" name="itemId"
 												value="{{itemDetails.itemId}}" />
