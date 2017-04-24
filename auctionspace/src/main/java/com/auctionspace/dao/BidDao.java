@@ -70,7 +70,18 @@ public class BidDao {
 
 		return true;
 	}
-	
+
+	public BidModel getWinningBid(int itemId) {
+		BidModel bid = null;
+		try {
+			String query = "select * from bid where item_id='" + itemId + "'";
+			logger.info("in getWinningBid: " + query);
+			bid = jdbcTemplate.queryForObject(query,  new BidMapper());
+		} catch (Exception e) {
+			logger.error("Error in getWinningBid: " + e.getMessage());
+		}
+		return bid;
+	}
 }
 	class BidMapper implements RowMapper<BidModel> {
 		public BidModel mapRow(ResultSet rs, int arg1) throws SQLException {

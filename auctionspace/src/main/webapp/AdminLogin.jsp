@@ -106,8 +106,7 @@
 			  </table>
 <form:form name="login-form" class="login-form" id="loginForm" modelAttribute="login" action="adminProcess" method="post">	
 		<div class="header">
-		<h1>Welcome to AuctionSpace</h1>
-		<span>Login</span>
+		<h1>Administrator Login</h1>
 		</div>
 	
 		<div class="content">

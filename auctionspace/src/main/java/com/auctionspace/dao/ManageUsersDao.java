@@ -5,6 +5,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.auctionspace.dao.ItemsDao.ItemMapper;
+import com.auctionspace.model.ItemsModel;
 import com.auctionspace.model.LoginModel;
 import com.auctionspace.model.UserModel;
 
@@ -68,6 +70,18 @@ public class ManageUsersDao implements IManageUsersDao{
 		logger.debug("query " + selectUserQuery);
 		users = jdbctemp.query(selectUserQuery, new UserMapper());
 		return users.size() > 0 ? users.get(0) : null;
+	}
+	
+	public UserModel getUserDetails(String username) {
+		UserModel user = null;
+		try {
+			String query = "select * from User where username='" + username + "'";
+			logger.info("in getUserDetails: " + query);
+			user = jdbctemp.queryForObject(query,  new UserMapper());
+		} catch (Exception e) {
+			logger.error("Error in getUserDetails: " + e.getMessage());
+		}
+		return user;
 	}
 }
 
