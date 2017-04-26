@@ -143,15 +143,7 @@
 					<li>No of Bids: ${noOfBids}</li>
 					<li>Current Bid: ${prevBid}</li>
 				</ul>
-			</details>
-			<form:form commandName="auction"
-				action="/auctionspace/Auction/registerUserforItemAuction"
-				class="well form-horizontal" method="post">
-				<input type="hidden" name="itemId" value="${item.itemId}" />
-				<input type="hidden" name="fname" value="${fname}" />
-				<input class="tbl-apply" type="submit" value="Register" name="Register">
-			</form:form>
-	
+			</details>	
 			<button id="Stop">Stop</button>
 			<br><br>
 			<p id="header"><b>${message}</b></p>
