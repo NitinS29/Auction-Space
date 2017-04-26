@@ -24,6 +24,11 @@ public class ItemsDao {
 
 	@Autowired 
 	JdbcTemplate jdbcTemplate;
+	
+	ItemsDao() {
+		dataSource= ConnectionUtility.getDataSource();
+		jdbcTemplate= new JdbcTemplate(dataSource);
+	}
 
 	public static ItemsDao instance = new ItemsDao();
 	private static Logger logger = Logger.getLogger(ItemsDao.class);
@@ -136,7 +141,7 @@ public class ItemsDao {
 	public Object getAllItemsForUser(String fname) {
 		JSONArray items = new JSONArray();
 		try {
-			String query = "select * from Items where seller NOT LIKE '%" + fname + "%'";
+			String query = "select * from Items where status = 'Active' and seller NOT LIKE '%" + fname + "%'";
 			logger.info("in getAllItemsForUser: " + query);
 			List<Map<String, Object>> itemsList = this.jdbcTemplate.queryForList(query);
 			for (int i = 0; i < itemsList.size(); i++)

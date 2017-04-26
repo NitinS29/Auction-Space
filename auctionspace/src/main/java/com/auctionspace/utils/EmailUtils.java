@@ -5,6 +5,7 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 import org.apache.catalina.User;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ import com.auctionspace.model.ItemsModel;
 import com.auctionspace.model.UserModel;
 
 public class EmailUtils {
-
+	private static Logger logger = Logger.getLogger(EmailUtils.class);
 	public void send(String to, String itemName, float bidAmount){  
 		String from = "email.auctionspace@gmail.com";
 
@@ -54,9 +55,9 @@ public class EmailUtils {
 
 	}
 
-	public void sendBuyerDetails(String to, ItemsModel itemInfo, BidModel bidInfo, UserModel userInfo) {  
+	public boolean sendBuyerDetails(String to, ItemsModel itemInfo, BidModel bidInfo, UserModel userInfo) {  
 		String from = "email.auctionspace@gmail.com";
-
+logger.info("In sendBuyerDetails");
 		String password = "Qrrv159+";
 
 		//Get properties object    
@@ -68,7 +69,7 @@ public class EmailUtils {
 		props.put("mail.smtp.auth", "true");    
 		props.put("mail.smtp.port", "465");    
 
-		//get Session   
+		//get Session
 
 		Session session = Session.getDefaultInstance(props,    
 				new javax.mail.Authenticator() {    
@@ -85,11 +86,13 @@ public class EmailUtils {
 			message.setText("Details of auction\nProduct Name: " + itemInfo.getItemDisplayName() 
 			+ "\nProduct Description: " + itemInfo.getDescription() + "\nAuction price: " + bidInfo.getbid_amount() 
 			+ "\nBuyer Name: " + userInfo.getFname() + " " + userInfo.getLname() + "\n");    
-
 			//send message  
 			Transport.send(message);    
-			System.out.println("message sent successfully");    
-		} catch (MessagingException e) {throw new RuntimeException(e);}    
+			System.out.println("message sent successfully");
+			return true;
+		} catch (MessagingException e) {
+			return false;
+		}    
 
 	}
 }

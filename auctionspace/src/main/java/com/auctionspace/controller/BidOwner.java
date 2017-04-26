@@ -1,6 +1,5 @@
 package com.auctionspace.controller;
 
-import com.auctionspace.model.ItemsModel;
 import com.auctionspace.utils.EmailUtils;
 
 public class BidOwner implements IObserver{

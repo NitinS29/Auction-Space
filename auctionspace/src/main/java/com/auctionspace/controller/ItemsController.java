@@ -15,7 +15,6 @@ import com.auctionspace.dao.BidDao;
 import com.auctionspace.dao.ItemsDao;
 import com.auctionspace.dao.ManageUsersDao;
 import com.auctionspace.model.ItemsModel;
-import com.auctionspace.utils.EmailUtils;
 
 import java.io.File;
 

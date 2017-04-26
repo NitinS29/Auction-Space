@@ -20,12 +20,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ManageUsersDao implements IManageUsersDao{
-
 	@Autowired
 	DataSource dataSource;
 
 	@Autowired 
 	JdbcTemplate jdbctemp;
+	
+	ManageUsersDao() {
+		dataSource= ConnectionUtility.getDataSource();
+		jdbctemp= new JdbcTemplate(dataSource);
+	}
 
 	public static ManageUsersDao instance = new ManageUsersDao();
 	private static Logger logger = Logger.getLogger(ManageUsersDao.class);
@@ -36,7 +40,9 @@ public class ManageUsersDao implements IManageUsersDao{
 
 	@Override
 	public void registerUser(UserModel user) {
-		String insertUserQuery = "insert into User values(?,?,?,?,?,?,?,?)";
+		String insertUserQuery = "insert into User (fname, mname, lname, emailId, username, password, phone, address) values(?,?,?,?,?,?,?,?)";
+		logger.debug("query " + insertUserQuery + user.getFname() + user.getMname() + user.getLname()
+				+ user.getEmail() +user.getUsername() +user.getPassword() + user.getPhone() + user.getAddress());
 		jdbctemp.update(insertUserQuery, new Object[] { user.getFname(), user.getMname(),user.getLname()
 				, user.getEmail(),user.getUsername(),user.getPassword(), user.getPhone(), user.getAddress()});
 	}
