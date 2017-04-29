@@ -5,15 +5,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.auctionspace.dao.ItemsDao.ItemMapper;
-import com.auctionspace.model.ItemsModel;
 import com.auctionspace.model.LoginModel;
 import com.auctionspace.model.UserModel;
 
 import java.sql.ResultSet;
 import java.util.List;
-import java.util.Map;
-
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
@@ -69,14 +65,6 @@ public class ManageUsersDao implements IManageUsersDao{
 		}
 		return null;
 	}
-
-	public UserModel validateAdmin(LoginModel login) {
-		List<UserModel> users = null;
-		String selectUserQuery = "select * from User where usertype='admin' and username='" + login.getUsername() + "' and password='" + login.getPassword()+ "'";
-		logger.debug("query " + selectUserQuery);
-		users = jdbctemp.query(selectUserQuery, new UserMapper());
-		return users.size() > 0 ? users.get(0) : null;
-	}
 	
 	public UserModel getUserDetails(String username) {
 		UserModel user = null;
@@ -104,6 +92,7 @@ class UserMapper implements RowMapper<UserModel> {
 			user.setPassword(rs.getString("password"));
 			user.setPhone(rs.getInt("phone"));
 			user.setAddress(rs.getString("address"));
+			user.setUserType(rs.getString("usertype"));
 			logger.info("Returning from usermapper" + user.getEmail());}
 		catch(Exception e) {
 			logger.debug("Error in usermapper");

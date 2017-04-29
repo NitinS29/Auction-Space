@@ -60,44 +60,23 @@ public class ManageUsersController {
 		mav.addObject("login", new LoginModel());
 		return mav;
 	}
-	
-	@RequestMapping(value = "/adminLogin", method = RequestMethod.GET)
-	public ModelAndView showadminLogin(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("AdminLogin");
-		mav.addObject("login", new LoginModel());
-		return mav;
-	}
 
 	@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
 	public ModelAndView loginProcess(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("login") LoginModel login) {
 		ModelAndView mav = null;
 		UserModel user = userService.validateUser(login);
 		if (null != user) {
-			mav = new ModelAndView("Welcome");
+			if(user.getUserType().equals("admin")) {
+				mav = new ModelAndView("AdminHomePage");
+			} else {
+				mav = new ModelAndView("Welcome");
+			}
 			mav.addObject("user", user);
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", user.getUsername());
-
 		} else {
 			mav = new ModelAndView("login");
 			mav.addObject("message", "Username or Password is wrong!!");
-		}
-		return mav;
-	}
-	
-	@RequestMapping(value = "/adminProcess", method = RequestMethod.POST)
-	public ModelAndView adminProcess(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("login") LoginModel login) {
-		ModelAndView mav = null;
-		UserModel user = userService.validateAdmin(login);
-		if (null != user) {
-			mav = new ModelAndView("AdminHomePage");
-			mav.addObject("user", user);
-			HttpSession session = request.getSession();
-			session.setAttribute("userId", user.getUsername());
-
-		} else {
-			mav = new ModelAndView("login");
-			mav.addObject("message", "Admin login or password was invalid!!");
 		}
 		return mav;
 	}

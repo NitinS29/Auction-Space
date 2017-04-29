@@ -14,6 +14,7 @@ public class UserModel {
 	private String fname;
 	private String mname;
 	private String lname;
+	private String userType;
 		
 	@NotEmpty
 	@Email
@@ -105,5 +106,13 @@ public class UserModel {
 	public void setAddress(String address)
 	{
 		this.address = address;
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 }
