@@ -3,9 +3,7 @@ package com.auctionspace.utils;
 import com.auctionspace.controller.BidOwner;
 import com.auctionspace.controller.IObserver;
 import com.auctionspace.dao.BidDao;
-import com.auctionspace.dao.ItemsDao;
 import com.auctionspace.model.BidModel;
-import com.auctionspace.model.ItemsModel;
 
 public class BidUtils implements IBid{
 	@Override
@@ -32,7 +30,6 @@ public class BidUtils implements IBid{
 
 	@Override
 	public IObserver addBidder(IObserver iBidder) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -43,7 +40,6 @@ public class BidUtils implements IBid{
 
 	@Override
 	public void notifyBidder() {
-		// TODO Auto-generated method stub
 		
 	}
 }

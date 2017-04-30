@@ -1,4 +1,4 @@
-import java.util.List;
+package auctionspace.dao;
 
 import org.json.JSONArray;
 import org.junit.Assert;
@@ -8,17 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.auctionspace.dao.AuctionDao;
 import com.auctionspace.dao.BidDao;
 import com.auctionspace.dao.ItemsDao;
-import com.auctionspace.model.AuctionModel;
 import com.auctionspace.model.BidModel;
  
 @ContextConfiguration(locations = "classpath:AuctionSpace-servlet-test.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TestBidDao 
+public class BidDaoTest 
 {
      
     @Autowired

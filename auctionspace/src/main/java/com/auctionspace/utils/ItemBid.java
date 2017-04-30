@@ -1,8 +1,5 @@
 package com.auctionspace.utils;
 
-import com.auctionspace.controller.IObserver;
-//import java.util.Iterator;
-
 
 public class ItemBid{
 
@@ -42,8 +39,6 @@ public class ItemBid{
 	
 	/*@Override
 	public IObserver addBidder(IObserver iBidder) {
-		// TODO Auto-generated method stub
-		
 		return null;
 	}*/
 

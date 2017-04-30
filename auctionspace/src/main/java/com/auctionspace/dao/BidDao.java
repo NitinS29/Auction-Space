@@ -36,7 +36,7 @@ public class BidDao {
 		return instance;
 	}
 
-	public float getLastBid(int item_id){
+	public float getHighestBid(int item_id){
 		float prevBid = 0;
 		try {
 			String query = "SELECT MAX(bid_amount) FROM Bid where item_id = ?";

@@ -1,3 +1,5 @@
+package auctionspace.utils;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -7,7 +9,7 @@ import com.auctionspace.utils.EmailTask;
 
 @ContextConfiguration(locations = "classpath:AuctionSpace-servlet-test.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TestEmailTask {
+public class EmailTaskTest {
 
 	@Test
 	public void testSend() {

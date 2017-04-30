@@ -1,23 +1,17 @@
 package com.auctionspace.dao;
 
 import org.apache.log4j.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
-import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
-
 import javax.sql.DataSource;
 
 import com.auctionspace.model.AuctionModel;
-import com.auctionspace.model.ItemsModel;
 
 @Service
 public class AuctionDao {

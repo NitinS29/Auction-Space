@@ -121,7 +121,7 @@ public class ItemsController {
 		mav.addObject("item", itemInfo);
 		mav.addObject("itemId", itemId);
 		mav.addObject("fname", fname);
-		mav.addObject("prevBid",bidService.getLastBid(itemInfo.getItemId()));
+		mav.addObject("prevBid",bidService.getHighestBid(itemInfo.getItemId()));
 		mav.addObject("noOfBids",bidService.getNoOfBids(itemInfo.getItemId()));
 		return mav;
 	}

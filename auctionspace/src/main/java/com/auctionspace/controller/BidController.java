@@ -8,23 +8,16 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.auctionspace.dao.BidDao;
 import com.auctionspace.model.BidModel;
 import com.auctionspace.model.ItemsModel;
-import com.auctionspace.model.LoginModel;
 import com.auctionspace.model.UserModel;
 import com.auctionspace.utils.BidUtils;
 import com.auctionspace.utils.EmailUtils;
-//import com.auctionspace.utils.ItemUtils;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.auctionspace.dao.ItemsDao;
 import com.auctionspace.dao.ManageUsersDao;
 
@@ -57,7 +50,7 @@ public class BidController {
 			mav.addObject("item", itemInfo);
 			mav.addObject("fname", bid.getusername());
 			mav.addObject("message","Bid was successful !!!");
-			mav.addObject("prevBid",bidService.getLastBid(bid.getitem_id()));
+			mav.addObject("prevBid",bidService.getHighestBid(bid.getitem_id()));
 			mav.addObject("noOfBids",bidService.getNoOfBids(bid.getitem_id()));
 			bidUtils.notifyBidder(userService.getUserEmailId(itemService.getSeller(bid.getitem_id())),itemInfo.getItemDisplayName(),bid.getbid_amount());
 		} else {
@@ -65,7 +58,7 @@ public class BidController {
 			ItemsModel itemInfo = itemService.getItemDetails(itemId);
 			mav.addObject("fname", bid.getusername());
 			mav.addObject("item", itemInfo);
-			mav.addObject("prevBid",bidService.getLastBid(bid.getitem_id()));
+			mav.addObject("prevBid",bidService.getHighestBid(bid.getitem_id()));
 			mav.addObject("noOfBids",bidService.getNoOfBids(bid.getitem_id()));
 			mav.addObject("message", "Bid is invalid!!");
 		}

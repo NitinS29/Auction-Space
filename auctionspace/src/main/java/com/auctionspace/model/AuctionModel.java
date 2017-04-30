@@ -5,6 +5,14 @@ public class AuctionModel {
 	private String fname;
 	private String emailId;
 	
+	public AuctionModel(int itemId, String fname, String emailId) {
+		this.itemId = itemId;
+		this.fname = fname;
+		this.emailId = emailId;
+	}
+	
+	public AuctionModel() {}
+	
 	public String getEmailId() {
 		return emailId;
 	}

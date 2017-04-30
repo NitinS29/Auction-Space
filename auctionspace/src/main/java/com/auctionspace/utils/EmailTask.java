@@ -5,7 +5,6 @@ import java.io.StringWriter;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.auctionspace.dao.BidDao;
@@ -19,12 +18,9 @@ import com.auctionspace.model.UserModel;
 public class EmailTask {
 	private static Logger logger = Logger.getLogger(EmailTask.class);
 
-	//@Autowired
-	public BidDao bidService = BidDao.getInstance().instance;
-	//@Autowired
-	public ItemsDao itemService =  ItemsDao.getInstance().instance;
-	//@Autowired
-	ManageUsersDao userService =  ManageUsersDao.getInstance().instance;
+	public BidDao bidService = BidDao.getInstance();
+	public ItemsDao itemService =  ItemsDao.getInstance();
+	public ManageUsersDao userService =  ManageUsersDao.getInstance();
 
 	public boolean sendEmailDetails(int itemId) {
 		boolean result  = false;

@@ -3,7 +3,6 @@ package com.auctionspace.utils;
 import java.util.ArrayList;
 
 import com.auctionspace.controller.IObserver;
-import com.auctionspace.model.ItemsModel;
 
 public interface IBid {
 	public IObserver addBidder(IObserver iBidder);

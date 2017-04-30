@@ -4,14 +4,7 @@ import java.util.Properties;
 import javax.mail.*;    
 import javax.mail.internet.*;
 
-import org.apache.catalina.User;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.auctionspace.dao.BidDao;
-import com.auctionspace.dao.ItemsDao;
-import com.auctionspace.dao.ManageUsersDao;
 import com.auctionspace.model.BidModel;
 import com.auctionspace.model.ItemsModel;
 import com.auctionspace.model.UserModel;
