@@ -1,7 +1,5 @@
 package com.auctionspace.utils;
 
-import com.auctionspace.controller.BidOwner;
-import com.auctionspace.controller.IObserver;
 import com.auctionspace.dao.BidDao;
 import com.auctionspace.model.BidModel;
 

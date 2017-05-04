@@ -104,7 +104,7 @@
 								<div class="button navbar-right">
 						<button class="navbar-btn nav-button wow fadeInRight"
 							data-wow-delay="0.6s">
-							<a href="/auctionspace/SignOut">Logout</a>
+							<a href="/auctionspace/Users/SignOut">Logout</a>
 						</button>
 					</div>
               <ul class="main-nav nav navbar-nav navbar-right">

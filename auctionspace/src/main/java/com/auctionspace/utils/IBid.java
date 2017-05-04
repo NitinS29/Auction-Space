@@ -2,8 +2,6 @@ package com.auctionspace.utils;
 
 import java.util.ArrayList;
 
-import com.auctionspace.controller.IObserver;
-
 public interface IBid {
 	public IObserver addBidder(IObserver iBidder);
 	public IObserver removeBidder(IObserver iBidder);

@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import com.auctionspace.model.BidModel;
+import com.auctionspace.utils.ConnectionUtility;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

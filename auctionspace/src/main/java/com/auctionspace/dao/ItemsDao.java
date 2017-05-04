@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import com.auctionspace.model.ItemsModel;
+import com.auctionspace.utils.ConnectionUtility;
 
 @Service
 public class ItemsDao {

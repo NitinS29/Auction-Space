@@ -80,4 +80,11 @@ public class ManageUsersController {
 		}
 		return mav;
 	}
+	
+	@RequestMapping(value = "/SignOut", method = RequestMethod.GET)
+	public ModelAndView signOut(HttpSession session){
+		ModelAndView mav = new ModelAndView("index");
+		session.invalidate();
+		return mav;
+	}
 }

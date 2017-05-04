@@ -1,4 +1,4 @@
-package com.auctionspace.dao;
+package com.auctionspace.utils;
 
 public class ConnectionData {
 	String jdbcDriver = "com.mysql.jdbc.Driver";

@@ -1,4 +1,4 @@
-package com.auctionspace.controller;
+package com.auctionspace.utils;
 
 public interface IObserver {
 	

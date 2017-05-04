@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.auctionspace.model.LoginModel;
 import com.auctionspace.model.UserModel;
+import com.auctionspace.utils.ConnectionUtility;
 
 import java.sql.ResultSet;
 import java.util.List;

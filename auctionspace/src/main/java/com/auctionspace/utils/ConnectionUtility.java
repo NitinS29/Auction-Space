@@ -1,4 +1,4 @@
-package com.auctionspace.dao;
+package com.auctionspace.utils;
 
 import org.apache.log4j.Logger;
 
