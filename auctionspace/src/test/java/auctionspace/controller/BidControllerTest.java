@@ -22,6 +22,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties.Session;
 import org.springframework.context.annotation.ComponentScan;
@@ -51,7 +52,8 @@ import com.auctionspace.utils.EmailUtils;
 import junit.framework.Assert;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration({ "classpath:AuctionSpace-servlet-test.xml" })
 @WebAppConfiguration
 public class BidControllerTest {
@@ -114,17 +116,4 @@ public class BidControllerTest {
 			
 		}
 		
-		@Test 
-		public void testSendEmailDetails() throws Exception{
-			Map<String, Object> sessionAttrs = new HashMap<>();
-			sessionAttrs.put("userId", "MockUser");
-			bidModel = new BidModel(5, 200,27, "MockUser");
-			Mockito.when(this.userService().getUserDetails("MockUser")).thenReturn(userInfo);
-			this.mockMvc.perform(get("/Bid/sendEmailDetails/{itemId}", 27)
-					.sessionAttrs(sessionAttrs)
-			.header("host", "localhost:80"))
-			.andExpect(status().isOk())
-			.andExpect(view().name("Welcome"));	
-		}
-
 }
