@@ -1,16 +1,48 @@
+package auctionspace.controller;
+
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.auctionspace.controller.ManageUsersController;
+import com.auctionspace.dao.ManageUsersDao;
 import com.auctionspace.model.LoginModel;
 import com.auctionspace.model.UserModel;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
+@ContextConfiguration({ "classpath:AuctionSpace-servlet-test.xml" })
+@WebAppConfiguration
 public class ManageUsersControllerTest {
 
+	@InjectMocks
+	ManageUsersController manageUsersController;
+	@Autowired
+	public ManageUsersDao userService;
+	
+	@Mock
+	MockHttpSession session;
+	@Mock 
+	UserModel user;
+	
+	public ManageUsersDao userService(){
+		return Mockito.mock(ManageUsersDao.class);
+	}
+	
 	@Test
 	public void testGetDummyEmployee() {
 		ManageUsersController test = new ManageUsersController();
@@ -23,42 +55,8 @@ public class ManageUsersControllerTest {
 		MockHttpServletRequest testReq = new MockHttpServletRequest();
 		MockHttpServletResponse testRes = new MockHttpServletResponse();
 		ManageUsersController test = new ManageUsersController();
-		test.showRegister(testReq,testRes);
-		assertNotNull(test.showRegister(testReq,testRes));
-		assertSame("SellerRegister",test.showRegister(testReq,testRes));
-	}
-
-	@Test
-	public void testAddUser() {
-		MockHttpServletRequest testReq = new MockHttpServletRequest();
-		MockHttpServletResponse testRes = new MockHttpServletResponse();
-		ManageUsersController test = new ManageUsersController();
-		UserModel dummyOne = new UserModel();
-		assertNull(test.addUser(testReq, testRes, dummyOne));
-		test.addUser(testReq, testRes, dummyOne);
-		assertNotNull(test.addUser(testReq, testRes, dummyOne));
-	}
-
-	@Test
-	public void testShowRegisterBuyer() {
-		MockHttpServletRequest testReq = new MockHttpServletRequest();
-		MockHttpServletResponse testRes = new MockHttpServletResponse();
-		ManageUsersController test = new ManageUsersController();
-		assertNull(test.showRegisterBuyer(testReq,testRes));
-		test.showRegisterBuyer(testReq,testRes);
-		assertNotNull(test.showRegisterBuyer(testReq,testRes));
-		assertSame("BuyerRegister",test.showRegisterBuyer(testReq,testRes));
-	}
-
-	@Test
-	public void testAddBuyer() {
-		MockHttpServletRequest testReq = new MockHttpServletRequest();
-		MockHttpServletResponse testRes = new MockHttpServletResponse();
-		ManageUsersController test = new ManageUsersController();
-		UserModel dummyOne = new UserModel();
-		assertNull(test.addBuyer(testReq, testRes, dummyOne));
-		test.addBuyer(testReq, testRes, dummyOne);
-		assertNotNull(test.addBuyer(testReq, testRes, dummyOne));
+		test.showRegisterUser(testReq,testRes);
+		assertNotNull(test.showRegisterUser(testReq,testRes));
 	}
 
 	@Test
@@ -66,20 +64,7 @@ public class ManageUsersControllerTest {
 		MockHttpServletRequest testReq = new MockHttpServletRequest();
 		MockHttpServletResponse testRes = new MockHttpServletResponse();
 		ManageUsersController test = new ManageUsersController();
-		assertNull(test.showLogin(testReq, testRes));
-		test.showLogin(testReq, testRes);
 		assertNotNull(test.showLogin(testReq, testRes));
-	}
-
-	@Test
-	public void testLoginProcess() {
-		MockHttpServletRequest testReq = new MockHttpServletRequest();
-		MockHttpServletResponse testRes = new MockHttpServletResponse();
-		ManageUsersController test = new ManageUsersController();
-		LoginModel testLogMod = new LoginModel();
-		assertNull(test.loginProcess(testReq, testRes,testLogMod));
-		test.loginProcess(testReq, testRes,testLogMod);
-		assertNotNull(test.loginProcess(testReq, testRes,testLogMod));
 	}
 
 }
