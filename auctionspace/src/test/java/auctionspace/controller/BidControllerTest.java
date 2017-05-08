@@ -1,13 +1,20 @@
-package auctionspace;
+package auctionspace.controller;
 
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.param;
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.param;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.json.JSONArray;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import com.auctionspace.controller.BidController;
 import com.auctionspace.dao.BidDao;
@@ -40,6 +48,9 @@ import com.auctionspace.model.UserModel;
 import com.auctionspace.utils.BidUtils;
 import com.auctionspace.utils.EmailUtils;
 
+import junit.framework.Assert;
+
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:AuctionSpace-servlet-test.xml" })
 @WebAppConfiguration
@@ -49,10 +60,10 @@ public class BidControllerTest {
 		@InjectMocks
 		BidController bidController;
 		@Mock
-		UserModel user;
+		UserModel userInfo;
 		
 		@Mock
-		BidDao bidDao;
+		BidDao bidService;
 		@Mock
 		BidModel bidModel;
 		@Mock
@@ -65,18 +76,30 @@ public class BidControllerTest {
 		EmailUtils emailUtil;
 		private MockMvc mockMvc;
 		
+		public ManageUsersDao userService(){
+			return Mockito.mock(ManageUsersDao.class);
+		}
 
 		@Before
 		public void setup(){
+			//bidController = new BidController();
 			MockitoAnnotations.initMocks(this);
-			this.mockMvc = MockMvcBuilders.standaloneSetup(bidController).build();
+			InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+			viewResolver.setPrefix("/WEB-INF/");
+			viewResolver.setSuffix(".jsp");
+			this.mockMvc = MockMvcBuilders.standaloneSetup(bidController).setViewResolvers(viewResolver).build();
 			
+			userInfo = userService.getUserDetails("MockUser");	
 		}
 		
 		
 		@Test
 		public void testgetBid() throws Exception{
-			this.mockMvc.perform(get("/Bid/bidding/{itemId}",1))
+			Map<String, Object> sessionAttrs = new HashMap<>();
+			sessionAttrs.put("userId", "Nitin");
+			
+			this.mockMvc.perform(get("/Bid/bidding/{itemId}",1).sessionAttrs(sessionAttrs))
+			.andExpect(model().attribute("user","Nitin"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("Bid"));
 			
@@ -84,7 +107,7 @@ public class BidControllerTest {
 		
 		@Test
 		public void testSetBid() throws Exception{
-			this.mockMvc.perform(post("/Bid/bidProcess/{itemId}", 1))
+			this.mockMvc.perform(post("/Bid/bidProcess/{itemId}", 27))
 			.andExpect(model().attribute("message", "Bid is invalid!!"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("ItemInformation"));
@@ -93,13 +116,15 @@ public class BidControllerTest {
 		
 		@Test 
 		public void testSendEmailDetails() throws Exception{
-			MockHttpSession session = new MockHttpSession();
-			MockHttpServletRequest request = new  MockHttpServletRequest();
-			session = (MockHttpSession) request.getSession();
-			session.setAttribute("userId", "abc");
-			this.mockMvc.perform(get("/Bid/sendEmailDetails/{itemId}", 1)
-					.session(session))
+			Map<String, Object> sessionAttrs = new HashMap<>();
+			sessionAttrs.put("userId", "MockUser");
+			bidModel = new BidModel(5, 200,27, "MockUser");
+			Mockito.when(this.userService().getUserDetails("MockUser")).thenReturn(userInfo);
+			this.mockMvc.perform(get("/Bid/sendEmailDetails/{itemId}", 27)
+					.sessionAttrs(sessionAttrs)
+			.header("host", "localhost:80"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("Welcome"));	
 		}
+
 }
