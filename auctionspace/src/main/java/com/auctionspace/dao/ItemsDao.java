@@ -55,7 +55,7 @@ public class ItemsDao {
 			return item;
 		}
 	}
-	public JSONArray getAllItems() {
+	public String getAllItems() {
 		JSONArray items = new JSONArray();
 		try {
 			String query = "select * from Items";
@@ -81,7 +81,7 @@ public class ItemsDao {
 		} catch (Exception e) {
 			logger.error("Error in getAllItems: " + e.getMessage());
 		}
-		return items;
+		return items.toString();
 	}
 
 	public boolean addItem(ItemsModel items, String fileName) {
@@ -139,7 +139,7 @@ public class ItemsDao {
 		return seller;
 	}
 
-	public Object getAllItemsForUser(String fname) {
+	public String getAllItemsForUser(String fname) {
 		JSONArray items = new JSONArray();
 		try {
 			String query = "select * from Items where status = 'Active' and seller NOT LIKE '%" + fname + "%'";
@@ -165,10 +165,10 @@ public class ItemsDao {
 		} catch (Exception e) {
 			logger.error("Error in getAllItemsForUser: " + e.getMessage());
 		}
-		return items;
+		return items.toString();
 	}
 
-	public Object getItemsAuctionedByUser(String fname) {
+	public String getItemsAuctionedByUser(String fname) {
 		JSONArray items = new JSONArray();
 		try {
 			String query = "select * from Items where seller LIKE '%" + fname + "%'";
@@ -194,10 +194,10 @@ public class ItemsDao {
 		} catch (Exception e) {
 			logger.error("Error in getAllItemsForUser: " + e.getMessage());
 		}
-		return items;
+		return items.toString();
 	}
 
-	public Object getAllItemsForAdmin() {
+	public String getAllItemsForAdmin() {
 		JSONArray items = new JSONArray();
 		try {
 			String query = "select a.*, COUNT(b.bid_amount) as noOfBids, MAX(b.bid_amount) as currentBid from items a join Bid b on a.item_id = b.item_id group by b.item_id";
@@ -224,7 +224,7 @@ public class ItemsDao {
 		} catch (Exception e) {
 			logger.error("Error in getAllItemsForAdmin: " + e.getMessage());
 		}
-		return items;
+		return items.toString();
 	}	
 
 }

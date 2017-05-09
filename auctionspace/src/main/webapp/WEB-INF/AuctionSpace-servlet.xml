@@ -17,14 +17,14 @@
 	</bean>
 
 	<bean id="user" class="com.auctionspace.model.UserModel" />
-	<bean id="userService" class="com.auctionspace.dao.ManageUsersDao" />
+	<bean id="userDao" class="com.auctionspace.dao.ManageUsersDao" />
 	
 	<bean id="item" class="com.auctionspace.model.ItemsModel" />
-	<bean id="itemService" class="com.auctionspace.dao.ItemsDao" />
+	<bean id="itemDao" class="com.auctionspace.dao.ItemsDao" />
 	
 	<bean id="auction" class="com.auctionspace.model.AuctionModel" />
-	<bean id="auctionService" class="com.auctionspace.dao.AuctionDao" />
-	<bean id="bidService" class="com.auctionspace.dao.BidDao" />
+	<bean id="auctionDao" class="com.auctionspace.dao.AuctionDao" />
+	<bean id="bidDao" class="com.auctionspace.dao.BidDao" />
 
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -44,9 +44,9 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
-			value="jdbc:mysql://localhost:3306/AuctionSpace?useSSL=false" />
+			value="jdbc:mysql://localhost:3306/ssdiproject?useSSL=false" />
 		<property name="username" value="root" />
-		<property name="password" value="Ssdi@2017" />
+		<property name="password" value="admin123" />
 	</bean>
 
 	<bean id="messageSource"

@@ -33,12 +33,12 @@ public class ManageUsersController {
 	}
 
 	@Autowired
-	public ManageUsersDao userService;
+	public ManageUsersDao userDao;
 
 	@RequestMapping(value = "/registerProcessUser", method = RequestMethod.POST)
 	public ModelAndView addUser(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("user") @Valid UserModel user) {
-		userService.registerUser(user);
+		userDao.registerUser(user);
 
 		HttpSession session = request.getSession();
 		session.setAttribute("userId", user.getUsername());
@@ -64,7 +64,7 @@ public class ManageUsersController {
 	@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
 	public ModelAndView loginProcess(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("login") LoginModel login) {
 		ModelAndView mav = null;
-		UserModel user = userService.validateUser(login);
+		UserModel user = userDao.validateUser(login);
 		if (null != user) {
 			if(user.getUserType().equals("admin")) {
 				mav = new ModelAndView("AdminHomePage");

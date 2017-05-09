@@ -29,43 +29,43 @@ public class ItemsController {
 	private static Logger logger = Logger.getLogger(ItemsController.class);
 
 	@Autowired
-	public ItemsDao itemService;
+	public ItemsDao itemDao;
 
 	@Autowired
-	public ManageUsersDao userService;
+	public ManageUsersDao userDao;
 
 	@Autowired
-	public BidDao bidService;
+	public BidDao bidDao;
 
 	@RequestMapping(value = "/getItemsList", method = RequestMethod.GET)
 	public @ResponseBody String getItemsList() {
 		logger.debug("In getItemsList");
-		return itemService.getAllItems().toString();
+		return itemDao.getAllItems().toString();
 	}
 
 	@RequestMapping(value = "/getItemsList/{fname}", method = RequestMethod.GET)
 	public @ResponseBody String getItemsListForUser(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
 		logger.debug("In getAllItemsForUser");
-		return itemService.getAllItemsForUser(fname).toString();
+		return itemDao.getAllItemsForUser(fname).toString();
 	}
 
 	@RequestMapping(value = "/getItemsAuctionedByUser/{fname}", method = RequestMethod.GET)
 	public @ResponseBody String getItemsAuctionedByUser(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
 		logger.debug("In getItemsAuctionedByUser");
-		return itemService.getItemsAuctionedByUser(fname).toString();
+		return itemDao.getItemsAuctionedByUser(fname).toString();
 	}
 
 	@RequestMapping(value = "/getItemsBoughtByUser/{fname}", method = RequestMethod.GET)
 	public @ResponseBody String getItemsBoughtByUser(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
 		logger.debug("In getItemsAuctionedByUser");
-		return itemService.getItemsAuctionedByUser(fname).toString();
+		return itemDao.getItemsAuctionedByUser(fname).toString();
 	}
 
 	@RequestMapping(value = "/displayItems/{fname}", method = RequestMethod.GET)
 	public ModelAndView displayItems(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
 		logger.debug("In displayItems");
 		ModelAndView mav = new ModelAndView("DisplayItems");
-		mav.addObject("items", itemService.getAllItems().toString());
+		mav.addObject("items", itemDao.getAllItems().toString());
 		mav.addObject("fname", fname);
 		return mav;
 	}
@@ -74,7 +74,7 @@ public class ItemsController {
 	public ModelAndView displayAuctionedItems(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
 		logger.debug("In displayAuctionedItems");
 		ModelAndView mav = new ModelAndView("AuctionedItems");
-		mav.addObject("items", itemService.getItemsAuctionedByUser(fname).toString());
+		mav.addObject("items", itemDao.getItemsAuctionedByUser(fname).toString());
 		mav.addObject("fname", fname);
 		return mav;
 	}
@@ -98,9 +98,9 @@ public class ItemsController {
 				logger.error("Error in processAddItem: " + ex.getMessage());
 			}
 		}
-		itemService.addItem(item, fileName);
+		itemDao.addItem(item, fileName);
 		ModelAndView mav = new ModelAndView("DisplayItems");
-		mav.addObject("items", itemService.getAllItems().toString());
+		mav.addObject("items", itemDao.getAllItems().toString());
 		mav.addObject("itemName", item.getItemDisplayName());
 		mav.addObject("fname", item.getSeller());
 		return mav;
@@ -117,12 +117,12 @@ public class ItemsController {
 	@RequestMapping(value = "/getItemInformation", method = RequestMethod.GET)
 	public ModelAndView getItemInformation(@RequestParam("itemId") String itemId, @RequestParam("fname") String fname, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("ItemInformation");
-		ItemsModel itemInfo = itemService.getItemDetails(itemId);
+		ItemsModel itemInfo = itemDao.getItemDetails(itemId);
 		mav.addObject("item", itemInfo);
 		mav.addObject("itemId", itemId);
 		mav.addObject("fname", fname);
-		mav.addObject("prevBid",bidService.getHighestBid(itemInfo.getItemId()));
-		mav.addObject("noOfBids",bidService.getNoOfBids(itemInfo.getItemId()));
+		mav.addObject("prevBid",bidDao.getHighestBid(itemInfo.getItemId()));
+		mav.addObject("noOfBids",bidDao.getNoOfBids(itemInfo.getItemId()));
 		return mav;
 	}
 }

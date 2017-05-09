@@ -32,20 +32,20 @@ public class AuctionController {
 	@Autowired
 	public AuctionDao auctionService;
 	@Autowired
-	public ItemsDao itemService;
+	public ItemsDao itemDao;
 	@Autowired
-	ManageUsersDao userService;
+	ManageUsersDao userDao;
 	@Autowired
-	BidDao bidService;
+	BidDao bidDao;
 
 	@RequestMapping(value = "/registerUserforItemAuction", method = RequestMethod.POST)
 	public ModelAndView registerUserForItemAuction(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("auction") AuctionModel auction) {
 		logger.info("Id: " + auction.getItemId() + "fname:"  + auction.getFname());
-		auction.setEmailId(userService.getUserEmailId(auction.getFname()));
+		auction.setEmailId(userDao.getUserEmailId(auction.getFname()));
 		auctionService.registerUser(auction);
 		ModelAndView mav = new ModelAndView("ItemInformation");
-		ItemsModel itemInfo = itemService.getItemDetails(Integer.toString(auction.getItemId()));
+		ItemsModel itemInfo = itemDao.getItemDetails(Integer.toString(auction.getItemId()));
 		mav.addObject("item", itemInfo);
 		mav.addObject("itemId", Integer.toString(auction.getItemId()));
 		mav.addObject("message", "Registered for auction of " + itemInfo.getItemDisplayName());
@@ -55,14 +55,14 @@ public class AuctionController {
 	@RequestMapping(value = "/getAllAuctions/{fname}" , method=RequestMethod.GET)
 	public @ResponseBody String getAllAuctionInfo(@PathVariable("fname")String fname,HttpServletRequest request, HttpServletResponse response) {
 		logger.info("In getAllItemsForAdmin:");
-		return  itemService.getAllItemsForAdmin().toString();
+		return  itemDao.getAllItemsForAdmin().toString();
 	}
 
 	@RequestMapping(value = "/displayItemsAdmin/{fname}", method = RequestMethod.GET)
 	public ModelAndView displayItemsAdmin(@PathVariable("fname")String fname, HttpServletRequest request, HttpServletResponse response) {
 		logger.debug("In displayItemsAdmin");
 		ModelAndView mav = new ModelAndView("AllAuctionInfo");
-		mav.addObject("items", itemService.getAllItemsForAdmin().toString());
+		mav.addObject("items", itemDao.getAllItemsForAdmin().toString());
 		mav.addObject("fname", fname);
 		return mav;
 	}
@@ -72,12 +72,12 @@ public class AuctionController {
 			@ModelAttribute("auction") AuctionModel auction) {
 		logger.debug("In stopAuctionAdmin");
 		ModelAndView mav = new ModelAndView("ItemInfoAdmin");
-		ItemsModel itemInfo = itemService.getItemDetails(Integer.toString(auction.getItemId()));
+		ItemsModel itemInfo = itemDao.getItemDetails(Integer.toString(auction.getItemId()));
 		mav.addObject("item", itemInfo);
 		mav.addObject("itemId", itemId);
 		mav.addObject("fname", fname);
-		mav.addObject("prevBid",bidService.getHighestBid(itemInfo.getItemId()));
-		mav.addObject("noOfBids",bidService.getNoOfBids(itemInfo.getItemId()));
+		mav.addObject("prevBid",bidDao.getHighestBid(itemInfo.getItemId()));
+		mav.addObject("noOfBids",bidDao.getNoOfBids(itemInfo.getItemId()));
 		return mav;
 	}
 
@@ -87,7 +87,7 @@ public class AuctionController {
 		logger.debug("In stopAuction");
 		auctionService.stopAuction(Integer.parseInt(itemId));
 		ModelAndView mav = new ModelAndView("ItemInfoAdmin");
-		ItemsModel itemInfo = itemService.getItemDetails(itemId);
+		ItemsModel itemInfo = itemDao.getItemDetails(itemId);
 		mav.addObject("item", itemInfo);
 		mav.addObject("itemId", itemId);
 		mav.addObject("message", "The auction has been stopped for " + itemInfo.getItemDisplayName());
@@ -97,12 +97,12 @@ public class AuctionController {
 	@RequestMapping(value = "/getItemInfo", method = RequestMethod.GET)
 	public ModelAndView getItemInformation(@RequestParam("itemId") String itemId, @RequestParam("fname") String fname, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("ItemInformation");
-		ItemsModel itemInfo = itemService.getItemDetails(itemId);
+		ItemsModel itemInfo = itemDao.getItemDetails(itemId);
 		mav.addObject("item", itemInfo);
 		mav.addObject("itemId", itemId);
 		mav.addObject("fname", fname);
-		mav.addObject("prevBid",bidService.getHighestBid(itemInfo.getItemId()));
-		mav.addObject("noOfBids",bidService.getNoOfBids(itemInfo.getItemId()));
+		mav.addObject("prevBid",bidDao.getHighestBid(itemInfo.getItemId()));
+		mav.addObject("noOfBids",bidDao.getNoOfBids(itemInfo.getItemId()));
 		return mav;
 	}
 }

@@ -85,7 +85,7 @@ public class ItemsModelTest {
 	@Test
 	public void testSetItemDisplayName() {
 		item.setItemDisplayName("TestProduct");
-		assertEquals(item.getItemDisplayName(), "Test Product");
+		assertEquals(item.getItemDisplayName(), "TestProduct");
 		assertNotEquals(item.getItemDisplayName(), "Test Product");
 	}
 

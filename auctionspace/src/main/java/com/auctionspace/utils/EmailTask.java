@@ -18,24 +18,24 @@ import com.auctionspace.model.UserModel;
 public class EmailTask {
 	private static Logger logger = Logger.getLogger(EmailTask.class);
 
-	public BidDao bidService = BidDao.getInstance();
-	public ItemsDao itemService =  ItemsDao.getInstance();
-	public ManageUsersDao userService =  ManageUsersDao.getInstance();
+	public BidDao bidDao = BidDao.getInstance();
+	public ItemsDao itemDao =  ItemsDao.getInstance();
+	public ManageUsersDao userDao =  ManageUsersDao.getInstance();
 
 	public boolean sendEmailDetails(int itemId) {
 		boolean result  = false;
 		try {
 			//get the seller email id from seller name
-			String to = userService.getUserEmailId(itemService.getSeller(itemId));
+			String to = userDao.getUserEmailId(itemDao.getSeller(itemId));
 
 			//get item details from the item table
-			ItemsModel itemInfo = itemService.getItemDetails(Integer.toString(itemId));
+			ItemsModel itemInfo = itemDao.getItemDetails(Integer.toString(itemId));
 
 			//get username from the bid table
-			BidModel bidInfo = bidService.getWinningBid(itemId);
+			BidModel bidInfo = bidDao.getWinningBid(itemId);
 
 			//get the buyer details from the bid table
-			UserModel userInfo = userService.getUserDetails(bidInfo.getusername());
+			UserModel userInfo = userDao.getUserDetails(bidInfo.getusername());
 
 			EmailUtils util = new EmailUtils();
 			result = util.sendBuyerDetails(to, itemInfo, bidInfo, userInfo);
@@ -49,7 +49,7 @@ public class EmailTask {
 	public List<Integer> getItemIdForClosedBids() {
 		List<Integer> bidInfo = null;
 		try {
-			bidInfo = bidService.getListOfClosedBids();
+			bidInfo = bidDao.getListOfClosedBids();
 		} catch (Exception e) {
 			StringWriter sw = new StringWriter();
 			e.printStackTrace(new PrintWriter(sw));

@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -20,11 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.auctionspace.controller.ManageUsersController;
 import com.auctionspace.dao.ManageUsersDao;
-import com.auctionspace.model.LoginModel;
 import com.auctionspace.model.UserModel;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-//@RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration({ "classpath:AuctionSpace-servlet-test.xml" })
 @WebAppConfiguration
 public class ManageUsersControllerTest {
@@ -33,16 +30,16 @@ public class ManageUsersControllerTest {
 	ManageUsersController manageUsersController;
 	@Autowired
 	public ManageUsersDao userService;
-	
+
 	@Mock
 	MockHttpSession session;
 	@Mock 
 	UserModel user;
-	
+
 	public ManageUsersDao userService(){
 		return Mockito.mock(ManageUsersDao.class);
 	}
-	
+
 	@Test
 	public void testGetDummyEmployee() {
 		ManageUsersController test = new ManageUsersController();

@@ -26,11 +26,11 @@ import com.auctionspace.dao.ManageUsersDao;
 public class BidController {
 	private static Logger logger = Logger.getLogger(BidController.class);
 	@Autowired
-	public BidDao bidService;
+	public BidDao bidDao;
 	@Autowired
-	public ItemsDao itemService;
+	public ItemsDao itemDao;
 	@Autowired
-	ManageUsersDao userService;
+	ManageUsersDao userDao;
 
 	@RequestMapping(value = "/bidProcess/{itemId}")
 	public ModelAndView setBid(@PathVariable String itemId, HttpServletRequest request, HttpServletResponse response,
@@ -42,24 +42,24 @@ public class BidController {
 		logger.info("itemId:" + itemId);
 		logger.info("itemId:" + bid.getitem_id());
 		//ManageUsersDao user = new ManageUsersDao();
-		if (bidUtils.validateBid(bid.getbid_amount(), itemService.getItemPrice(bid.getitem_id()))) {
-			result = bidService.addBid(bid);}
+		if (bidUtils.validateBid(bid.getbid_amount(), itemDao.getItemPrice(bid.getitem_id()))) {
+			result = bidDao.addBid(bid);}
 		if(result){
 			mav = new ModelAndView("ItemInformation");
-			ItemsModel itemInfo = itemService.getItemDetails(Integer.toString(bid.getitem_id()));
+			ItemsModel itemInfo = itemDao.getItemDetails(Integer.toString(bid.getitem_id()));
 			mav.addObject("item", itemInfo);
 			mav.addObject("fname", bid.getusername());
 			mav.addObject("message","Bid was successful !!!");
-			mav.addObject("prevBid",bidService.getHighestBid(bid.getitem_id()));
-			mav.addObject("noOfBids",bidService.getNoOfBids(bid.getitem_id()));
-			bidUtils.notifyBidder(userService.getUserEmailId(itemService.getSeller(bid.getitem_id())),itemInfo.getItemDisplayName(),bid.getbid_amount());
+			mav.addObject("prevBid",bidDao.getHighestBid(bid.getitem_id()));
+			mav.addObject("noOfBids",bidDao.getNoOfBids(bid.getitem_id()));
+			bidUtils.notifyBidder(userDao.getUserEmailId(itemDao.getSeller(bid.getitem_id())),itemInfo.getItemDisplayName(),bid.getbid_amount());
 		} else {
 			mav = new ModelAndView("ItemInformation");
-			ItemsModel itemInfo = itemService.getItemDetails(itemId);
+			ItemsModel itemInfo = itemDao.getItemDetails(itemId);
 			mav.addObject("fname", bid.getusername());
 			mav.addObject("item", itemInfo);
-			mav.addObject("prevBid",bidService.getHighestBid(bid.getitem_id()));
-			mav.addObject("noOfBids",bidService.getNoOfBids(bid.getitem_id()));
+			mav.addObject("prevBid",bidDao.getHighestBid(bid.getitem_id()));
+			mav.addObject("noOfBids",bidDao.getNoOfBids(bid.getitem_id()));
 			mav.addObject("message", "Bid is invalid!!");
 		}
 		return mav;
@@ -69,7 +69,7 @@ public class BidController {
 	public ModelAndView getBid(@PathVariable String itemId, HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("bid") BidModel bid) {
 		ModelAndView mav = new ModelAndView("Bid");
-		ItemsModel itemInfo = itemService.getItemDetails(itemId);
+		ItemsModel itemInfo = itemDao.getItemDetails(itemId);
 		mav.addObject("user", request.getSession().getAttribute("userId"));
 		mav.addObject("itemId", itemId);
 		mav.addObject("item",itemInfo);
@@ -80,16 +80,16 @@ public class BidController {
 	@RequestMapping(value = "/sendEmailDetails/{itemId}")
 	public ModelAndView sendEmailDetails(@PathVariable int itemId, HttpServletRequest request, HttpServletResponse response) {
 		//get the seller email id from seller name
-		String to = userService.getUserEmailId(itemService.getSeller(itemId));
+		String to = userDao.getUserEmailId(itemDao.getSeller(itemId));
 
 		//get item details from the item table
-		ItemsModel itemInfo = itemService.getItemDetails(Integer.toString(itemId));
+		ItemsModel itemInfo = itemDao.getItemDetails(Integer.toString(itemId));
 
 		//get username from the bid table
-		BidModel bidInfo = bidService.getWinningBid(itemId);
+		BidModel bidInfo = bidDao.getWinningBid(itemId);
 
 		//get the buyer details from the bid table
-		UserModel userInfo = userService.getUserDetails(bidInfo.getusername());
+		UserModel userInfo = userDao.getUserDetails(bidInfo.getusername());
 
 		EmailUtils util = new EmailUtils();
 		util.sendBuyerDetails(to, itemInfo, bidInfo, userInfo);

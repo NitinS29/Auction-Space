@@ -283,7 +283,7 @@
   </dependency>  
   <association id="32">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="33" name="bidService"/>      
+      <attribute id="33" name="bidDao"/>      
       <multiplicity id="34" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
@@ -302,7 +302,7 @@
     <bendpoint x="2458" y="374"/>    
     <bendpoint x="2458" y="675"/>    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="38" name="itemService"/>      
+      <attribute id="38" name="itemDao"/>      
       <multiplicity id="39" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="16" navigable="true"/>    
@@ -310,7 +310,7 @@
   </association>  
   <association id="40">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="41" name="userService"/>      
+      <attribute id="41" name="userDao"/>      
       <multiplicity id="42" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="17" navigable="true"/>    
@@ -336,7 +336,7 @@
   </dependency>  
   <association id="47">    
     <end type="SOURCE" refId="26" navigable="false">      
-      <attribute id="48" name="userService"/>      
+      <attribute id="48" name="userDao"/>      
       <multiplicity id="49" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="17" navigable="true"/>    
@@ -344,7 +344,7 @@
   </association>  
   <association id="50">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="51" name="bidService"/>      
+      <attribute id="51" name="bidDao"/>      
       <multiplicity id="52" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
@@ -386,7 +386,7 @@
   <association id="62">    
     <bendpoint x="2100" y="675"/>    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="63" name="itemService"/>      
+      <attribute id="63" name="itemDao"/>      
       <multiplicity id="64" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="16" navigable="true"/>    
@@ -395,7 +395,7 @@
   <association id="65">    
     <bendpoint x="1071" y="374"/>    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="66" name="bidService"/>      
+      <attribute id="66" name="bidDao"/>      
       <multiplicity id="67" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
@@ -420,7 +420,7 @@
   <association id="72">    
     <bendpoint x="1590" y="374"/>    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="73" name="userService"/>      
+      <attribute id="73" name="userDao"/>      
       <multiplicity id="74" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="17" navigable="true"/>    
@@ -476,7 +476,7 @@
   </association>  
   <association id="87">    
     <end type="SOURCE" refId="26" navigable="false">      
-      <attribute id="88" name="bidService"/>      
+      <attribute id="88" name="bidDao"/>      
       <multiplicity id="89" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
@@ -529,7 +529,7 @@
   <association id="98">    
     <bendpoint x="2163" y="675"/>    
     <end type="SOURCE" refId="26" navigable="false">      
-      <attribute id="99" name="itemService"/>      
+      <attribute id="99" name="itemDao"/>      
       <multiplicity id="100" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="16" navigable="true"/>    
@@ -602,7 +602,7 @@
   <association id="116">    
     <bendpoint x="2479" y="675"/>    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="117" name="itemService"/>      
+      <attribute id="117" name="itemDao"/>      
       <multiplicity id="118" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="16" navigable="true"/>    
@@ -617,7 +617,7 @@
   </dependency>  
   <association id="120">    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="121" name="userService"/>      
+      <attribute id="121" name="userDao"/>      
       <multiplicity id="122" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="17" navigable="true"/>    
@@ -644,7 +644,7 @@
   </dependency>  
   <association id="127">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="128" name="userService"/>      
+      <attribute id="128" name="userDao"/>      
       <multiplicity id="129" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="17" navigable="true"/>    
