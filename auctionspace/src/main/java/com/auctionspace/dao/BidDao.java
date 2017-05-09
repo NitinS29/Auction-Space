@@ -96,7 +96,7 @@ public class BidDao {
 		List<Map<String, Object>> listOfClosedBids = null;
 		List<Integer> listOfItemIdClosedBids = new ArrayList<Integer>();
 		try {
-			String query = "select b.item_id from bid as b, items as i where i.item_id = b.item_id and i.status = 'Closed' and i.end_time + interval 1 day = curdate()";
+			String query = "select b.item_id from bid as b, items as i where i.item_id = b.item_id and i.sent_mail = 0 and i.status = 'Closed' and i.end_time + interval 1 day = curdate()";
 			logger.info("in getListOfClosedBids: " + query);
 			listOfClosedBids = jdbcTemplate.queryForList(query);
 			for(int i = 0; i < listOfClosedBids.size(); i++) {

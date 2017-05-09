@@ -55,19 +55,6 @@
 		<property name="basename" value="/WEB-INF/messages" />
 	</bean>
 
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/Users/login" />
-			<mvc:exclude-mapping path="/Users/loginProcess" />
-			<mvc:exclude-mapping path="/Users/registerSeller" />
-			<mvc:exclude-mapping path="/Users/registerBuyer" />
-			<mvc:exclude-mapping path="/Users/registerProcessSeller" />
-			<mvc:exclude-mapping path="/Users/registerProcessBuyer" />
-			<bean class="com.auctionspace.utils.SessionUtil" />
-		</mvc:interceptor>
-	</mvc:interceptors>
-
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:annotation-driven />
 </beans>

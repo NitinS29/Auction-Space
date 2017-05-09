@@ -105,7 +105,6 @@
 					</div>
               <ul class="main-nav nav navbar-nav navbar-right">
                 <li class="wow fadeInDown" data-wow-delay="0s"><a class="active" href="#">Home</a></li>
-                <li class="wow fadeInDown" data-wow-delay="0.1s"><a href="#">Ongoing Auctions</a></li>
                 <li class="wow fadeInDown" data-wow-delay="0.2s"><a href="/auctionspace/Items/displayItems/${seller}">Buy</a></li>
                 <li class="wow fadeInDown" data-wow-delay="0.3s"><a href="/auctionspace/Items/addItem/${seller}">Sell</a></li>
 				<li class="wow fadeInDown" data-wow-delay="0.3s"><a href="#"></a></li>

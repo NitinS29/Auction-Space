@@ -39,6 +39,8 @@ public class EmailTask {
 
 			EmailUtils util = new EmailUtils();
 			result = util.sendBuyerDetails(to, itemInfo, bidInfo, userInfo);
+			
+			itemDao.setSentMail(Integer.toString(itemId));
 		}
 		catch(Exception e) {
 			return false;

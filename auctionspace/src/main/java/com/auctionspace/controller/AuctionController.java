@@ -82,7 +82,7 @@ public class AuctionController {
 	}
 
 	@RequestMapping(value = "/stopAuction/{itemId}" ,method = RequestMethod.POST)
-	public ModelAndView stopAuctionAdmin(@PathVariable String itemId, HttpServletRequest request, HttpServletResponse response,
+	public ModelAndView stopAuctionAdmin(@PathVariable String itemId, @RequestParam("fname") String fname, HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("auction") AuctionModel auction) {
 		logger.debug("In stopAuction");
 		auctionService.stopAuction(Integer.parseInt(itemId));
@@ -90,6 +90,7 @@ public class AuctionController {
 		ItemsModel itemInfo = itemDao.getItemDetails(itemId);
 		mav.addObject("item", itemInfo);
 		mav.addObject("itemId", itemId);
+		mav.addObject("fname", fname);
 		mav.addObject("message", "The auction has been stopped for " + itemInfo.getItemDisplayName());
 		return mav;
 	}

@@ -180,14 +180,14 @@
 								<tr class="odd wow fadeInUp" data-wow-delay="1s">
 									<th><p></p></th>
 									<th><p>Name</p></th>
-									<th><p>Quantity</p></th>
+									<!--<th><p>Quantity</p></th>-->
 									<th><p>Seller</p></th>
 									<th><p>Start Time</p></th>
 									<th><p>End Time</p></th>
-									<th><p>Location</p></th>
+									<!--<th><p>Location</p></th>-->
 									<th><p>Price</p></th>
-									<th><p>No Of Bids</p></th>
-									<th><p>Current Bid</p></th>
+									<!--<th><p>No Of Bids</p></th>
+									<th><p>Current Bid</p></th>-->
 									<th><p>Status</p></th>
 									<th><p></p></th>
 								</tr>
@@ -200,16 +200,16 @@
 												ng-href="/auctionspace/Auction/ItemInfoAdmin?itemId={{itemDetails.itemId}}&fname=${fname}" /><br>
 											<span class="job-type">{{itemDetails.itemDisplayName}}</span>
 										</h4></td>
-									<td><p>{{itemDetails.quantity}}</p></td>
+									<!--<td><p>{{itemDetails.quantity}}</p></td>-->
 									<td><p>{{itemDetails.seller}}</p></td>
 									<td><p>{{itemDetails.startTime}}</p></td>
 									<td><p>{{itemDetails.endTime}}</p></td>
-									<td><p>
+									<!--<td><p>
 											<i class="icon-location"></i>{{itemDetails.location}}
-										</p></td>
+										</p></td>-->
 									<td><p>&dollar; {{itemDetails.price}}</p></td>
-									<td><p>{{itemDetails.noOfBids}}</p></td>
-									<td><p>{{itemDetails.currentBid}}</p></td>
+									<!--<td><p>{{itemDetails.noOfBids}}</p></td>
+									<td><p>&dollar; {{itemDetails.currentBid}}</p></td>-->
 									<td><p>{{itemDetails.status}}</p></td>
 									<td class="tbl-apply"><form:form modelAttribute="auction"
 											action="/auctionspace/Auction/stopAuction/{{itemDetails.itemId}}"
@@ -217,7 +217,7 @@
 											<input type="hidden" name="itemId"
 												value="{{itemDetails.itemId}}" />
 											<input type="hidden" name="fname" value="${fname}" />
-											<input type="submit" value="Stop" name="Stop" ng-disabled = "${itemDetails.status} == Stopped">
+											<input type="submit" value="Stop" name="Stop"  onclick="return confirm('Are you sure you want to continue')">
 										</form:form></td>
 								</tr>
 							</table>

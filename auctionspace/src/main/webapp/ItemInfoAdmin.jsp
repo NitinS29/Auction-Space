@@ -108,9 +108,7 @@
 					</div>
               <ul class="main-nav nav navbar-nav navbar-right">
                 <li class="wow fadeInDown" data-wow-delay="0s"><a class="active" href="#">Home</a></li>
-                <li class="wow fadeInDown" data-wow-delay="0.1s"><a href="#">Ongoing Auctions</a></li>
-                <li class="wow fadeInDown" data-wow-delay="0.2s"><a href="/auctionspace/Items/displayItems/${fname}">Buy</a></li>
-                <li class="wow fadeInDown" data-wow-delay="0.3s"><a href="/auctionspace/Items/addItem/${fname}">Sell</a></li>
+                <li class="wow fadeInDown" data-wow-delay="0.2s"><a href="/auctionspace/Auction/displayItemsAdmin/${fname}">All Auctions</a></li>
 				<li class="wow fadeInDown" data-wow-delay="0.3s"><a href="#"></a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
@@ -144,7 +142,14 @@
 					<li>Current Bid: ${prevBid}</li>
 				</ul>
 			</details>	
-			<button id="Stop">Stop</button>
+			<form:form modelAttribute="auction"
+											action="/auctionspace/Auction/stopAuction/${item.itemId}"
+											class="well form-horizontal" method="post">
+											<input type="hidden" name="itemId"
+												value="${item.itemId}" />
+											<input type="hidden" name="fname" value="${fname}" />
+											<input type="submit" value="Stop" name="Stop"  onclick="return confirm('Are you sure you want to continue')">
+										</form:form>
 			<br><br>
 			<p id="header"><b>${message}</b></p>
 		</section>

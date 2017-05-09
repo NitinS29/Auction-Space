@@ -15,7 +15,7 @@
             <cron>
                 <name>EmailJob</name>
                 <job-name>EmailJob</job-name>
-                <cron-expression>0 21 09 1/1 * ? *</cron-expression>
+                <cron-expression>0 0/1 * 1/1 * ? *</cron-expression>
             </cron>
         </trigger>
     </schedule>

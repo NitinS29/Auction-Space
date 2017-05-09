@@ -9,7 +9,7 @@ public class UserModel {
 	private String username;
 	@NotEmpty
 	private String password;
-	private int phone;
+	private long phone;
 	@NotEmpty
 	private String fname;
 	private String mname;
@@ -89,12 +89,12 @@ public class UserModel {
 	{
 		this.emailId = emailId;
 	}
-	public int getPhone()
+	public long getPhone()
 	{
 		return phone;
 	}
 	
-	public void setPhone(int phone)
+	public void setPhone(long phone)
 	{
 		this.phone = phone;
 	}

@@ -87,9 +87,9 @@ public class ItemsDao {
 	public boolean addItem(ItemsModel items, String fileName) {
 		try {
 			logger.info("In add item method");
-			String sql = "insert into Items (item_display_name, price, quantity, start_time, end_time, seller, location, description, image_path) values (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			String sql = "insert into Items (item_display_name, price, quantity, start_time, end_time, seller, location, description, image_path, status) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 			logger.info("query=" + sql);
-			this.jdbcTemplate.update(sql, new Object[] {items.getItemDisplayName(), items.getPrice(), items.getQuantity(), items.getStartTime(), items.getEndTime(), items.getSeller(), items.getLocation(), items.getDescription(), fileName}) ;
+			this.jdbcTemplate.update(sql, new Object[] {items.getItemDisplayName(), items.getPrice(), items.getQuantity(), items.getStartTime(), items.getEndTime(), items.getSeller(), items.getLocation(), items.getDescription(), fileName, "Inactive"}) ;
 		} catch (Exception e) {
 			logger.error("Error in addItem: " + e.getMessage());
 		}
@@ -200,7 +200,8 @@ public class ItemsDao {
 	public String getAllItemsForAdmin() {
 		JSONArray items = new JSONArray();
 		try {
-			String query = "select a.*, COUNT(b.bid_amount) as noOfBids, MAX(b.bid_amount) as currentBid from items a join Bid b on a.item_id = b.item_id group by b.item_id";
+			//String query = "select a.*, COUNT(b.bid_amount) as noOfBids, MAX(b.bid_amount) as currentBid from items a join Bid b on a.item_id = b.item_id group by b.item_id";
+			String query = "select * from items";
 			logger.info("in getAllItemsForUser: " + query);
 			List<Map<String, Object>> itemsList = this.jdbcTemplate.queryForList(query);
 			for (int i = 0; i < itemsList.size(); i++)
@@ -217,14 +218,25 @@ public class ItemsDao {
 				item.put("description", itemsList.get(i).get("description").toString());
 				item.put("imagePath", itemsList.get(i).get("image_path").toString());
 				item.put("status", itemsList.get(i).get("status").toString());
-				item.put("currentBid", (float) itemsList.get(i).get("currentBid"));
-				item.put("noOfBids", Long.valueOf(itemsList.get(i).get("noOfBids").toString()).intValue());
+				//item.put("currentBid", (float) itemsList.get(i).get("currentBid"));
+				//item.put("noOfBids", Long.valueOf(itemsList.get(i).get("noOfBids").toString()).intValue());
 				items.put(item);
 			}
 		} catch (Exception e) {
 			logger.error("Error in getAllItemsForAdmin: " + e.getMessage());
 		}
 		return items.toString();
+	}
+
+	public void setSentMail(String itemId) {
+		try {
+			logger.info("In setSentMail method");
+			String sql = "update items set sent_mail = 1 where item_id = ?";
+			logger.info("query=" + sql);
+			this.jdbcTemplate.update(sql, new Object[] {itemId}) ;
+		} catch (Exception e) {
+			logger.error("Error in setSentMail: " + e.getMessage());
+		}
 	}	
 
 }

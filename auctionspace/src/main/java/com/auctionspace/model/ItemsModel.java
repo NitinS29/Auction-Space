@@ -34,9 +34,8 @@ public class ItemsModel {
 
 
 	}
-	public ItemsModel() {
-		// TODO Auto-generated constructor stub
-	}
+	public ItemsModel() {}
+
 	public int getItemId() {
 		return itemId;
 	}
@@ -140,6 +139,6 @@ public class ItemsModel {
 	public void setImage(CommonsMultipartFile[] image) {
 		this.image = image;
 	}
-	
-	
+
+
 }

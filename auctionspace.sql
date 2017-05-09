@@ -49,8 +49,8 @@ CREATE EVENT changeStatus
 		EVERY 5 SECOND
     DO
 		BEGIN
-			UPDATE ssdiproject.items SET status = 'Closed' where and status NOT LIKE '%Stopped%' and end_time + interval 1 day = curdate();
-			UPDATE ssdiproject.items SET status = 'Active' where start_time = curdate() and status NOT LIKE '%Stopped%';
+			UPDATE ssdiproject.items SET status = 'Closed' where status NOT LIKE '%Stopped%' and end_time + interval 1 day = curdate();
+			UPDATE ssdiproject.items SET status = 'Active' where (start_time < curdate() or start_time = curdate()) and status LIKE '%Inactive%';
 
 	END |
-delimiter ;	 
+delimiter ;

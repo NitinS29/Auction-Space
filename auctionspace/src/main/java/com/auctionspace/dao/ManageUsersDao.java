@@ -37,11 +37,11 @@ public class ManageUsersDao implements IManageUsersDao{
 
 	@Override
 	public void registerUser(UserModel user) {
-		String insertUserQuery = "insert into User (fname, mname, lname, emailId, username, password, phone, address) values(?,?,?,?,?,?,?,?)";
+		String insertUserQuery = "insert into User (fname, mname, lname, emailId, username, password, phone, address, usertype) values(?,?,?,?,?,?,?,?,?)";
 		logger.debug("query " + insertUserQuery + user.getFname() + user.getMname() + user.getLname()
 				+ user.getEmail() +user.getUsername() +user.getPassword() + user.getPhone() + user.getAddress());
 		jdbctemp.update(insertUserQuery, new Object[] { user.getFname(), user.getMname(),user.getLname()
-				, user.getEmail(),user.getUsername(),user.getPassword(), user.getPhone(), user.getAddress()});
+				, user.getEmail(),user.getUsername(),user.getPassword(), user.getPhone(), user.getAddress(), "user"});
 	}
 
 	@Override
@@ -91,7 +91,7 @@ class UserMapper implements RowMapper<UserModel> {
 			user.setEmail(rs.getString("emailId"));
 			user.setUsername(rs.getString("username"));
 			user.setPassword(rs.getString("password"));
-			user.setPhone(rs.getInt("phone"));
+			user.setPhone(rs.getLong("phone"));
 			user.setAddress(rs.getString("address"));
 			user.setUserType(rs.getString("usertype"));
 			logger.info("Returning from usermapper" + user.getEmail());}
